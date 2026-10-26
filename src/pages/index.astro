@@ -1,11 +1,32 @@
 ---
-import Welcome from '../components/Welcome.astro';
+// src/pages/index.astro
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import TerminalSection from '../components/TerminalSection.astro';
+import ArchitecturePillars from '../components/ArchitecturePillars.astro';
+import ProjectsSection from '../components/ProjectsSection.astro';
+import ExperienceSection from '../components/ExperienceSection.astro';
+import SkillsSection from '../components/SkillsSection.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Footer from '../components/Footer.astro';
+import GsapAnimations from '../components/GsapAnimations.astro';
 ---
 
-<Layout>
-	<Welcome />
+<Layout 
+	title="Ainul Yaqin | Software Engineer & AI Engineer"
+	description="Ainul Yaqin is a Software Engineer specializing in high-performance scalable systems, low-latency backends (Rust, Go, TypeScript), and production AI solutions. Creator of pfrsim, fastrpc, solid-email, deno-redis, and enterprise data platforms."
+>
+	<Navbar />
+	<main id="main-content" class="relative overflow-hidden">
+		<Hero />
+		<TerminalSection />
+		<ArchitecturePillars />
+		<ProjectsSection />
+		<ExperienceSection />
+		<SkillsSection />
+		<ContactSection />
+	</main>
+	<Footer />
+	<GsapAnimations />
 </Layout>
