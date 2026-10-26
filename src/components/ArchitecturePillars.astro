@@ -1,0 +1,488 @@
+---
+// src/components/ArchitecturePillars.astro
+
+const stories = [
+  {
+    id: "systems",
+    tabLabel: "// DISTRIBUTED PROTOCOLS",
+    headline: "Eliminating serialization bottlenecks: shifting from HTTP/JSON to raw TCP and binary framing.",
+    challenge: "High-concurrency microservices choke under JSON stringification overhead and verbose HTTP headers. Standard runtimes suffer from frequent garbage collection pauses under tens of thousands of continuous socket streams.",
+    solution: "Engineered fastrpc and deno-redis around raw persistent TCP streams and low-allocation buffer pipelines. Replacing JSON with MessagePack compressed binary payloads by over 60%, while zero-copy byte slicing eliminated heap churn.",
+    impact: "< 1.84ms median RPC latency, zero heap buffer allocations per Redis command on JSR, and built-in OpenTelemetry distributed tracing.",
+    projects: [
+      { name: "fastrpc", type: "Raw TCP RPC Framework", link: "https://github.com/Akin01/fastrpc" },
+      { name: "deno-redis", type: "JSR-Published Typed Client", link: "https://github.com/Akin01/deno-redis" }
+    ],
+    stack: ["Rust", "Deno", "Raw TCP", "MessagePack", "Buffer Slicing", "OpenTelemetry"],
+    visualType: "code"
+  },
+  {
+    id: "ai",
+    tabLabel: "// PRODUCTION AI & RAG",
+    headline: "Bridging ML research to production: deploying generative models that pass strict ESG compliance.",
+    challenge: "Enterprise sustainability documentation and environmental risk forecasting cannot tolerate hallucinations, schema drift, or non-deterministic outputs during mission-critical regulatory audits.",
+    solution: "At RIMM Sustainability (Singapore), architected end-to-end LLM data generation and prompt evaluation pipelines on Google Cloud Platform with strict automated schema validation. For pfrsim, integrated PyTorch LSTM forecasting models inside a native desktop app for environmental disaster prevention.",
+    impact: "Dramatically cut manual ESG documentation turnarounds, achieved 100% structured JSON fidelity, and delivered real-time 3D peatland moisture forecasting.",
+    projects: [
+      { name: "pfrsim (Tauri v2)", type: "Peatland Fire Simulator", link: "https://github.com/Akin01/pfrsim" },
+      { name: "RIMM Sustainability", type: "ESG AI Platform (Singapore)", link: "https://rimm.io" }
+    ],
+    stack: ["PyTorch", "GCP Stack", "RAG", "LLM Workflows", "Tauri v2", "Deep Learning"],
+    visualType: "pipeline"
+  },
+  {
+    id: "spatial",
+    tabLabel: "// 60 FPS SPATIAL WEBGL",
+    headline: "Conquering the browser main thread: offloading heavy spatial geo-computation to Web Workers.",
+    challenge: "Rendering dynamic flood inundation polygons for Aceh Province disaster response caused catastrophic DOM jank and dropped frame rates when computing complex spatial topologies on the main UI thread.",
+    solution: "Led engineering at Insightful Data Indonesia to decouple CPU-intensive spatial math into dedicated Web Workers, transferring pre-computed geometry buffers directly to MapLibre GL hardware-accelerated via WebGL on the GPU.",
+    impact: "Constant 60 FPS rendering under heavy spatial compute load, optimistic rendering with zero frame stutter, and sub-second citizen emergency coordination.",
+    projects: [
+      { name: "Tanggapi Aceh (Live)", type: "Provincial Flood Platform", link: "https://tanggapi.acehprov.go.id" },
+      { name: "Frac.run", type: "Real-Time WebSocket Intelligence", link: "https://frac.run" }
+    ],
+    stack: ["MapLibre GL", "WebGL", "Web Workers", "Spatial Analytics", "WebSockets", "Cloudflare D1"],
+    visualType: "image",
+    imageSrc: "/project_tanggapi_aceh.webp",
+    imageAlt: "Tanggapi Aceh Live Spatial Analytics Platform"
+  }
+];
+---
+
+<section class="py-24 bg-dark-bg border-b border-[#202534] overflow-hidden" id="architecture">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Header (Prefix title only, no big title, no divider) -->
+    <div class="mb-8">
+      <h2 class="font-mono text-xs sm:text-sm text-cyan-400 tracking-widest font-semibold uppercase">
+        // CORE ARCHITECTURAL FOCUS
+      </h2>
+    </div>
+
+    <!-- Storytelling Slide Controls (Tabs with // prefix, no numbers, no recs) -->
+    <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-8">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs" id="arch-tabs">
+        {stories.map((story, idx) => (
+          <button 
+            type="button" 
+            class={`arch-tab-btn px-4 py-2 border transition-colors ${
+              idx === 0 
+                ? 'active bg-cyan-400 text-black font-bold border-cyan-400' 
+                : 'bg-[#10131c] text-slate-400 hover:text-white border-[#202534]'
+            }`}
+            data-arch-index={idx}
+          >
+            {story.tabLabel}
+          </button>
+        ))}
+      </div>
+
+      <!-- Slide Prev / Next Navigation -->
+      <div class="flex items-center gap-2 font-mono text-xs">
+        <button 
+          type="button" 
+          id="arch-prev-btn"
+          class="px-3 py-1.5 bg-[#10131c] hover:bg-[#181c2a] border border-[#202534] hover:border-slate-500 text-slate-300 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+          title="Previous story"
+        >
+          &larr; PREV STORY
+        </button>
+        <button 
+          type="button" 
+          id="arch-next-btn"
+          class="px-3 py-1.5 bg-cyan-400 hover:bg-cyan-300 text-black font-bold transition-colors disabled:opacity-30 disabled:pointer-events-none"
+          title="Next story"
+        >
+          NEXT STORY &rarr;
+        </button>
+      </div>
+    </div>
+
+    <!-- Horizontal Right-to-Left Stage Carousel -->
+    <div class="relative w-full overflow-hidden" id="architecture-carousel">
+      <div id="architecture-track" class="flex w-full will-change-transform">
+        {stories.map((story, idx) => (
+          <div 
+            class="architecture-slide w-full shrink-0 px-1"
+            data-slide-index={idx}
+          >
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              
+              <!-- Left: Story Narrative with Minimalist In-Place Thinking (6 cols) -->
+              <div class="lg:col-span-6 space-y-6">
+
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                  {story.headline}
+                </h3>
+
+                <!-- Story Flow: Minimalist thinking after title -->
+                <div class="space-y-6 story-timeline">
+                  
+                  <!-- Step 1: The Challenge -->
+                  <div class="space-y-1.5 timeline-step" data-step="0">
+                    <div class="timeline-title font-mono text-xs font-bold text-rose-400 opacity-0 translate-y-1 transition-all duration-300">
+                      // THE CHALLENGE
+                    </div>
+                    <p class="timeline-typewriter text-xs sm:text-sm text-slate-300 leading-relaxed font-sans min-h-11" data-text={story.challenge}></p>
+                  </div>
+
+                  <!-- Step 2: The Breakthrough (Minimalist thinking directly after title) -->
+                  <div class="space-y-1.5 timeline-step" data-step="1">
+                    <div class="timeline-title font-mono text-xs font-bold text-cyan-400 flex items-center opacity-0 translate-y-1 transition-all duration-300">
+                      <span>// ARCHITECTURAL BREAKTHROUGH</span>
+                      <span class="thinking-indicator-1 hidden items-center gap-1.5 font-mono text-xs text-cyan-400 font-normal ml-2.5">
+                        <span class="inline-block animate-spin font-bold">⠋</span>
+                        <span class="text-slate-400 text-[11px]">thinking...</span>
+                      </span>
+                    </div>
+                    <p class="timeline-typewriter text-xs sm:text-sm text-slate-300 leading-relaxed font-sans min-h-14.5" data-text={story.solution}></p>
+                  </div>
+
+                  <!-- Step 3: Measured Impact (Minimalist thinking directly after title) -->
+                  <div class="space-y-1.5 timeline-step" data-step="2">
+                    <div class="timeline-title font-mono text-xs font-bold text-emerald-400 flex items-center opacity-0 translate-y-1 transition-all duration-300">
+                      <span>// MEASURED IMPACT</span>
+                      <span class="thinking-indicator-2 hidden items-center gap-1.5 font-mono text-xs text-emerald-400 font-normal ml-2.5">
+                        <span class="inline-block animate-spin font-bold">⠋</span>
+                        <span class="text-slate-400 text-[11px]">thinking...</span>
+                      </span>
+                    </div>
+                    <p class="timeline-typewriter text-xs sm:text-sm text-slate-300 leading-relaxed font-sans min-h-9" data-text={story.impact}></p>
+                  </div>
+
+                </div>
+
+                <!-- Project Badges & Links -->
+                <div class="pt-4 border-t border-[#202534] flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
+                  <div class="flex items-center gap-3">
+                    <span class="text-slate-400">PROJECTS:</span>
+                    {story.projects.map(p => (
+                      <a 
+                        href={p.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        class="text-cyan-400 hover:underline font-bold flex items-center gap-1"
+                      >
+                        <span>{p.name}</span>
+                        <span class="text-slate-600">&rarr;</span>
+                      </a>
+                    ))}
+                  </div>
+
+                  <div class="flex flex-wrap gap-1 text-[10px]">
+                    {story.stack.map(st => (
+                      <span class="px-2 py-0.5 bg-[#141824] border border-[#222a3d] text-slate-300">
+                        {st}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Visual Evidence (6 cols) -->
+              <div class="lg:col-span-6 relative">
+                
+                {story.visualType === 'code' && (
+                  <div class="w-full relative z-10 border border-[#262c3e] bg-[#0c0e16] shadow-2xl overflow-hidden font-mono text-xs">
+                    <div class="px-4 py-2.5 bg-[#121622] border-b border-[#222738] flex items-center justify-between text-slate-400 text-[11px]">
+                      <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 bg-rose-500 inline-block"></span>
+                        <span class="w-2.5 h-2.5 bg-amber-500 inline-block"></span>
+                        <span class="w-2.5 h-2.5 bg-emerald-500 inline-block"></span>
+                        <span class="ml-2 font-bold text-slate-200">fastrpc_runtime.rs // zero-alloc</span>
+                      </div>
+                      <div class="flex items-center gap-1.5 text-cyan-400 font-bold">
+                        <span class="w-1.5 h-1.5 bg-cyan-400"></span>
+                        <span>RAW TCP PROTOCOL</span>
+                      </div>
+                    </div>
+
+                    <div class="p-4 sm:p-5 text-slate-300 leading-relaxed text-[11px] sm:text-xs overflow-x-auto bg-[#080a10]">
+                      <pre><span class="text-slate-500">// raw TCP non-blocking stream + zero-copy buffer slicing</span>
+<span class="text-rose-400 font-bold">let</span> mut stream = TcpStream::connect(addr).<span class="text-rose-400">await</span>?;
+<span class="text-rose-400 font-bold">let</span> buffer = buffer_pool.acquire_zero_copy();
+
+<span class="text-slate-500">// MessagePack binary framing: eliminates JSON stringify overhead</span>
+<span class="text-rose-400 font-bold">let</span> payload = rmp_serde::to_vec_named(&amp;req)?;
+stream.write_all(&amp;payload).<span class="text-rose-400">await</span>?;
+
+<span class="text-slate-500">// Socket ping round-trip benchmarking</span>
+<span class="text-cyan-400 font-bold">METRIC</span> fastrpc median round-trip: 1.84ms
+<span class="text-cyan-400 font-bold">METRIC</span> Redis pipeline buffer allocs: 0 bytes/op (JSR @akin01/deno-redis)
+<span class="text-emerald-400 font-bold">STATUS</span> Zero GC pauses under 25k concurrent stream descriptors</pre>
+                    </div>
+
+                    <div class="px-4 py-2 bg-[#0d1017] border-t border-[#222738] flex items-center justify-between text-[10px] text-slate-400">
+                      <span>TCP PROTOCOL BENCHMARK</span>
+                      <span class="text-emerald-400 font-bold">&lt; 1.84ms P99 LATENCY</span>
+                    </div>
+                  </div>
+                )}
+
+                {story.visualType === 'pipeline' && (
+                  <div class="w-full relative z-10 border border-[#262c3e] bg-[#0c0e16] shadow-2xl p-5 space-y-4 font-mono text-xs">
+                    <div class="flex items-center justify-between pb-3 border-b border-[#222738] text-[11px] text-slate-400">
+                      <span class="text-emerald-400 font-bold">// GCP INFERENCE & AUDIT ENGINE</span>
+                      <span class="text-slate-400">MLOPS ARCHITECTURE</span>
+                    </div>
+
+                    <!-- Pipeline Step 1 -->
+                    <div class="p-3 bg-[#080a10] border border-[#1d2230] space-y-1">
+                      <div class="text-[10px] text-cyan-400 font-bold uppercase tracking-wider">// 01. Vector Retrieval & Grounding</div>
+                      <div class="text-slate-300 text-[11px]">Semantic search against verified client audit corpus with cosine similarity thresholds</div>
+                    </div>
+
+                    <!-- Pipeline Step 2 -->
+                    <div class="p-3 bg-[#080a10] border border-[#1d2230] space-y-1">
+                      <div class="text-[10px] text-amber-400 font-bold uppercase tracking-wider">// 02. Constrained LLM Inference</div>
+                      <div class="text-slate-300 text-[11px]">Deterministic temperature controls and structured schema output extraction</div>
+                    </div>
+
+                    <!-- Pipeline Step 3 -->
+                    <div class="p-3 bg-[#080a10] border border-[#1d2230] space-y-1">
+                      <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider">// 03. Automated Schema Verification</div>
+                      <div class="text-slate-300 text-[11px]">Strict JSON Schema validation: 100% adherence to ESG regulatory standards</div>
+                    </div>
+
+                    <div class="p-2.5 bg-[#101420] border border-[#222b40] flex items-center justify-between text-[11px]">
+                      <span class="text-slate-300 font-bold">pfrsim tensor output: [1, 12, 64, 64]</span>
+                      <span class="text-cyan-400 font-bold">LSTM INFERENCE READY</span>
+                    </div>
+                  </div>
+                )}
+
+                {story.visualType === 'image' && (
+                  <div class="w-full relative z-10 border border-[#262c3e] bg-[#0c0e16] shadow-2xl p-2.5 space-y-2">
+                    <div class="relative overflow-hidden bg-black aspect-16/10 border border-[#1b202e]">
+                      <img 
+                        src={story.imageSrc} 
+                        alt={story.imageAlt} 
+                        class="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-500"
+                        loading="lazy" 
+                      />
+                      <div class="absolute top-2.5 left-2.5 bg-[#090b12]/95 px-2.5 py-1 font-mono text-[10px] text-emerald-400 border border-[#203328] flex items-center gap-1.5 font-bold">
+                        <span class="w-1.5 h-1.5 bg-emerald-400 animate-pulse"></span>
+                        <span>LIVE PROVINCIAL DISASTER PLATFORM</span>
+                      </div>
+                    </div>
+
+                    <div class="px-2 py-1 flex items-center justify-between font-mono text-[10px] text-slate-400">
+                      <span class="text-slate-300">TANGGAPI.ACEHPROV.GO.ID</span>
+                      <span class="text-emerald-400 font-bold">60 FPS WEBGL • WEB WORKERS</span>
+                    </div>
+                  </div>
+                )}
+
+              </div>
+
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let currentArchIndex = 0;
+  const totalStories = 3;
+  let isSliding = false;
+  let activeTimelineTimer: any = null;
+
+  const tabButtons = document.querySelectorAll('.arch-tab-btn');
+  const prevBtn = document.getElementById('arch-prev-btn') as HTMLButtonElement;
+  const nextBtn = document.getElementById('arch-next-btn') as HTMLButtonElement;
+  const slides = document.querySelectorAll('.architecture-slide');
+
+  function typeString(el: HTMLElement, str: string, speed: number, onDone: () => void) {
+    let charIdx = 0;
+    function tick() {
+      if (charIdx < str.length) {
+        const nextIdx = Math.min(charIdx + 2, str.length);
+        el.innerHTML = str.slice(0, nextIdx) + '<span class="inline-block text-cyan-400 font-mono ml-0.5 animate-pulse">█</span>';
+        charIdx = nextIdx;
+        activeTimelineTimer = setTimeout(tick, speed);
+      } else {
+        el.innerHTML = str;
+        onDone();
+      }
+    }
+    tick();
+  }
+
+  function runSlideTimelineAnimation(slideEl: HTMLElement) {
+    if (!slideEl) return;
+
+    if (activeTimelineTimer) {
+      clearTimeout(activeTimelineTimer);
+      activeTimelineTimer = null;
+    }
+
+    const titles = slideEl.querySelectorAll('.timeline-title');
+    const typewriters = slideEl.querySelectorAll('.timeline-typewriter');
+    const thinking1 = slideEl.querySelector('.thinking-indicator-1') as HTMLElement;
+    const thinking2 = slideEl.querySelector('.thinking-indicator-2') as HTMLElement;
+
+    const p1 = typewriters[0] as HTMLElement;
+    const p2 = typewriters[1] as HTMLElement;
+    const p3 = typewriters[2] as HTMLElement;
+
+    if (!p1 || !p2 || !p3) return;
+
+    const text1 = p1.getAttribute('data-text') || '';
+    const text2 = p2.getAttribute('data-text') || '';
+    const text3 = p3.getAttribute('data-text') || '';
+
+    // 1. Reset all initial states: titles hidden, text cleared, thinking hidden
+    titles.forEach(t => {
+      const el = t as HTMLElement;
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(6px)';
+    });
+    p1.innerHTML = '';
+    p2.innerHTML = '';
+    p3.innerHTML = '';
+
+    if (thinking1) {
+      thinking1.classList.remove('inline-flex');
+      thinking1.classList.add('hidden');
+    }
+    if (thinking2) {
+      thinking2.classList.remove('inline-flex');
+      thinking2.classList.add('hidden');
+    }
+
+    // Step 1: Reveal Title 1, then type Challenge paragraph
+    if (titles[0]) {
+      const el = titles[0] as HTMLElement;
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }
+
+    typeString(p1, text1, 10, () => {
+      // Step 2: Reveal Title 2 with minimalist thinking directly after it!
+      if (titles[1]) {
+        const el = titles[1] as HTMLElement;
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }
+      if (thinking1) {
+        thinking1.classList.remove('hidden');
+        thinking1.classList.add('inline-flex');
+      }
+
+      // Minimalist thinking delay (~1.2 seconds)
+      activeTimelineTimer = setTimeout(() => {
+        // Thinking done -> completely disappear thinking!
+        if (thinking1) {
+          thinking1.classList.remove('inline-flex');
+          thinking1.classList.add('hidden');
+        }
+
+        // Start typing Breakthrough paragraph directly underneath!
+        typeString(p2, text2, 8, () => {
+          // Step 3: Reveal Title 3 with minimalist thinking directly after it!
+          if (titles[2]) {
+            const el = titles[2] as HTMLElement;
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+          }
+          if (thinking2) {
+            thinking2.classList.remove('hidden');
+            thinking2.classList.add('inline-flex');
+          }
+
+          // Minimalist thinking delay (~1.1 seconds)
+          activeTimelineTimer = setTimeout(() => {
+            // Thinking done -> completely disappear thinking!
+            if (thinking2) {
+              thinking2.classList.remove('inline-flex');
+              thinking2.classList.add('hidden');
+            }
+
+            // Start typing Measured Impact paragraph directly underneath!
+            typeString(p3, text3, 8, () => {
+              // Storytelling complete!
+            });
+          }, 1100);
+        });
+      }, 1200);
+    });
+  }
+
+  function goToArchStory(targetIndex: number) {
+    if (targetIndex < 0 || targetIndex >= totalStories) return;
+    if (targetIndex === currentArchIndex && !isSliding) return;
+
+    isSliding = true;
+    currentArchIndex = targetIndex;
+
+    // Horizontal slide transition from right to left (or left to right)
+    gsap.to('#architecture-track', {
+      xPercent: -100 * currentArchIndex,
+      duration: 0.65,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        isSliding = false;
+        // Trigger in-place thinking & typewriter sequence on active slide
+        const activeSlide = slides[currentArchIndex] as HTMLElement;
+        if (activeSlide) {
+          runSlideTimelineAnimation(activeSlide);
+        }
+      }
+    });
+
+    // Update tab styling
+    tabButtons.forEach((btn, idx) => {
+      if (idx === currentArchIndex) {
+        btn.classList.add('active', 'bg-cyan-400', 'text-black', 'font-bold', 'border-cyan-400');
+        btn.classList.remove('bg-[#10131c]', 'text-slate-400', 'border-[#202534]');
+      } else {
+        btn.classList.remove('active', 'bg-cyan-400', 'text-black', 'font-bold', 'border-cyan-400');
+        btn.classList.add('bg-[#10131c]', 'text-slate-400', 'border-[#202534]');
+      }
+    });
+
+    // Update prev/next button states
+    if (prevBtn) prevBtn.disabled = currentArchIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentArchIndex === totalStories - 1;
+  }
+
+  // Click tab listeners
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.getAttribute('data-arch-index') || '0', 10);
+      goToArchStory(idx);
+    });
+  });
+
+  // Next / Prev button listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => goToArchStory(currentArchIndex - 1));
+  }
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => goToArchStory(currentArchIndex + 1));
+  }
+
+  // Trigger animation ONLY when user scrolls #architecture into the viewport!
+  let hasTriggeredScroll = false;
+  ScrollTrigger.create({
+    trigger: '#architecture',
+    start: 'top 75%',
+    onEnter: () => {
+      if (!hasTriggeredScroll) {
+        hasTriggeredScroll = true;
+        const activeSlide = slides[currentArchIndex] as HTMLElement;
+        if (activeSlide) {
+          runSlideTimelineAnimation(activeSlide);
+        }
+      }
+    }
+  });
+</script>

@@ -1,0 +1,329 @@
+---
+// src/components/ExperienceSection.astro
+
+interface Role {
+  period: string;
+  role: string;
+  company: string;
+  location: string;
+  city: string;
+  highlights: string[];
+  techStack: string[];
+}
+
+const experiences: Role[] = [
+  {
+    period: "Sep 2023 — Feb 2025",
+    role: "Tech Lead",
+    company: "Patron Indonesia",
+    location: "Remote (Jakarta)",
+    city: "JAKARTA",
+    highlights: [
+      "Led a 6-developer engineering team designing and shipping an integrated data analytics platform for executive decision-makers.",
+      "Architected scalable, cost-effective distributed system architectures, boosting API throughput under heavy query spikes.",
+      "Optimized database query execution schemas and distributed Redis caching pipelines to achieve sub-second dashboard rendering.",
+      "Instituted rigorous CI/CD automation, pull request standards, and architectural reviews to accelerate deployment velocity."
+    ],
+    techStack: ["Distributed Systems", "Redis", "Team Leadership", "Data Pipelines", "CI/CD", "Node.js", "MySQL"]
+  },
+  {
+    period: "Project-based",
+    role: "Tech Lead (Software Architect)",
+    company: "Insightful Data Indonesia",
+    location: "Remote (Aceh)",
+    city: "ACEH",
+    highlights: [
+      "Led fullstack and spatial engineering for Aceh Province's real-time flood monitoring and disaster coordination platform (Tanggapi Aceh).",
+      "Engineered optimistic data rendering using MapLibre GL, offloading heavy topological computations to Web Workers and rendering via WebGL at continuous 60 FPS.",
+      "Architected resilient real-time communication protocols coordinating emergency alerts between affected citizens and regional disaster authorities."
+    ],
+    techStack: ["MapLibre GL", "WebGL", "Web Workers", "Spatial Analytics", "WebSockets", "Fullstack Architecture"]
+  },
+  {
+    period: "Jul 2024 — Jul 2025",
+    role: "AI Engineer (Freelance)",
+    company: "RIMM Sustainability",
+    location: "Remote (Singapore)",
+    city: "SINGAPORE",
+    highlights: [
+      "Developed LLM-powered internal automation and prompt workflows to generate client-compliant ESG & sustainability reports automatically.",
+      "Architected end-to-end data ingestion and model inference pipelines on Google Cloud Platform (GCP) ensuring strictly structured, validated JSON outputs.",
+      "Designed and executed automated validation checks and quality benchmarking suites, dramatically reducing manual audit turnaround times."
+    ],
+    techStack: ["LLM Pipelines", "GCP", "Prompt Engineering", "Output Validation", "Python", "Data Verification"]
+  },
+  {
+    period: "Oct 2022 — Sep 2023",
+    role: "Backend Engineer",
+    company: "KMPlus Consultant",
+    location: "Remote (Jakarta)",
+    city: "JAKARTA",
+    highlights: [
+      "Engineered scalable RESTful API solutions for Portaverse Pelindo KMS platform, streamlining data processing workflows.",
+      "Substantially reduced MySQL query times by conducting deep query execution plan analysis (EXPLAIN) and strategic compound indexing.",
+      "Eliminated algorithmic latency bottlenecks in randomized assessment assignments using tailored in-memory data structures."
+    ],
+    techStack: ["MySQL EXPLAIN", "Redis", "REST APIs", "Node.js", "Algorithmic Optimization"]
+  },
+  {
+    period: "Aug 2022 — Jan 2023",
+    role: "AI Engineer (Intern)",
+    company: "Nodeflux",
+    location: "Remote (Jakarta)",
+    city: "JAKARTA",
+    highlights: [
+      "Researched and benchmarked novel deep learning computer vision architectures for real-time video surveillance event detection.",
+      "Investigated model compression, weight quantization (INT8/FP16), and edge deployment strategies for resource-constrained hardware."
+    ],
+    techStack: ["Computer Vision", "Deep Learning", "PyTorch", "Model Quantization", "Edge AI"]
+  },
+  {
+    period: "Mar 2021 — Feb 2026",
+    role: "Python Programming & AI/ML Tutor",
+    company: "Superprof",
+    location: "Online",
+    city: "ONLINE",
+    highlights: [
+      "Mentored aspiring software and ML engineers in modular, idiomatic Python, clean architecture, PEP 8, and unit testing with pytest.",
+      "Designed hands-on curricula covering core data structures, algorithms, backpropagation, and end-to-end ML training pipelines."
+    ],
+    techStack: ["Python", "Algorithms", "PyTorch", "Clean Architecture", "Mentorship"]
+  }
+];
+---
+
+<section class="py-20 bg-dark-bg border-b border-[#202534] overflow-hidden" id="experience">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Header (Clean // prefix, no rec, no number, no divider) -->
+    <div class="mb-12">
+      <h2 class="font-mono text-xs sm:text-sm text-cyan-400 tracking-widest font-semibold uppercase">
+        // PROFESSIONAL TRAJECTORY & EXPERIENCE
+      </h2>
+    </div>
+
+    <!-- Route Map Container (Multi-curve animated line connecting experience stations) -->
+    <div class="relative w-full py-4" id="experience-route-container">
+      
+      <!-- Multi-Curve SVG Route Track: NO PRE-LINE, only active line drawn on scroll -->
+      <svg 
+        id="experience-route-svg" 
+        class="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
+      >
+        <!-- Animated cyan route line filled on scroll (no background pre-line) -->
+        <path 
+          id="route-track-fill" 
+          fill="none" 
+          stroke="#00e5ff" 
+          stroke-width="3" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+        />
+      </svg>
+
+      <!-- Alternating Station Rows -->
+      <div class="space-y-12 sm:space-y-16 relative z-10" id="route-stations-list">
+        {experiences.map((exp, idx) => (
+          <div 
+            class={`route-station relative flex flex-col ${idx % 2 === 0 ? 'md:items-start' : 'md:items-end'}`}
+            data-station-index={idx}
+          >
+            <!-- Station Card: Initially hidden, animates in with transition when connected to line -->
+            <div 
+              class={`station-card flat-panel p-5 sm:p-6 w-full md:w-[47%] relative ${
+                idx % 2 === 0 
+                  ? 'station-card-left md:mr-auto ml-7 md:ml-0' 
+                  : 'station-card-right ml-7 md:ml-0'
+              }`}
+            >
+              
+              <!-- Card Header Row (Clean, unbadged) -->
+              <div class="pb-3 mb-3 border-b border-[#202534]">
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="text-base sm:text-lg font-bold text-white transition-colors">
+                    {exp.role}
+                  </h3>
+                  <span class="text-cyan-400 font-mono text-xs font-semibold">@ {exp.company}</span>
+                </div>
+                <div class="font-mono text-xs text-slate-400 mt-0.5 flex items-center gap-2">
+                  <span class="text-slate-300 font-semibold">{exp.city}</span>
+                  <span>•</span>
+                  <span>{exp.period}</span>
+                </div>
+              </div>
+
+              <!-- Bullet Points -->
+              <ul class="space-y-2 text-xs text-slate-300 mb-4 font-sans">
+                {exp.highlights.map(item => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-cyan-400 font-mono text-xs mt-0.5">&gt;</span>
+                    <span class="leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <!-- Tech Stack Tags -->
+              <div class="flex flex-wrap items-center gap-1 pt-3 border-t border-[#202534]">
+                <span class="text-[10px] font-mono text-slate-400 mr-2">STACK:</span>
+                {exp.techStack.map(t => (
+                  <span class="px-2 py-0.5 bg-[#0a0c12] border border-[#1e2332] font-mono text-[10px] text-slate-300">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <!-- Station Node Marker: Initially hidden, pops in when line connects -->
+            <div 
+              class={`route-station-node absolute top-6 z-20 w-4 h-4 bg-dark-bg border-2 border-[#2b354e] flex items-center justify-center ${
+                idx % 2 === 0 
+                  ? 'left-0 md:left-[47.5%]' 
+                  : 'left-0 md:left-[52.5%]'
+              }`}
+              data-node-index={idx}
+            >
+              <div class="w-1.5 h-1.5 bg-slate-600 station-inner-dot"></div>
+            </div>
+
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* Initial hidden state for station cards */
+  .station-card {
+    background-color: rgba(14, 17, 26, 0.88) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid #22293a !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  }
+
+  .station-card-left {
+    transform: translateX(-40px) scale(0.96);
+  }
+
+  .station-card-right {
+    transform: translateX(40px) scale(0.96);
+  }
+
+  /* Initial hidden state for station nodes */
+  .route-station-node {
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.35s ease-out, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease;
+  }
+
+  /* Active connected state when line connects to station */
+  .route-station.card-connected .station-card {
+    opacity: 1 !important;
+    transform: translate(0, 0) scale(1) !important;
+    pointer-events: auto !important;
+    border-color: #384566 !important;
+  }
+
+  .route-station-node.node-connected {
+    opacity: 1 !important;
+    transform: scale(1.15) !important;
+    border-color: #00e5ff !important;
+  }
+
+  .route-station-node.node-connected .station-inner-dot {
+    background-color: #00e5ff !important;
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function setupRouteMapAnimation() {
+    const container = document.getElementById('experience-route-container');
+    const pathFill = document.getElementById('route-track-fill') as SVGPathElement | null;
+    const nodes = document.querySelectorAll('.route-station-node');
+    const stations = document.querySelectorAll('.route-station');
+
+    if (!container || !pathFill || nodes.length < 2) return;
+
+    // Calculate exact coordinates of station nodes relative to container
+    function renderPath() {
+      if (!container || !pathFill) return;
+      const containerRect = container.getBoundingClientRect();
+      const points: { x: number; y: number }[] = [];
+
+      nodes.forEach(node => {
+        const rect = node.getBoundingClientRect();
+        const x = rect.left - containerRect.left + rect.width / 2;
+        const y = rect.top - containerRect.top + rect.height / 2;
+        points.push({ x, y });
+      });
+
+      // Construct multi-curve cubic bezier path
+      let d = `M ${points[0].x} ${points[0].y}`;
+      for (let i = 0; i < points.length - 1; i++) {
+        const pA = points[i];
+        const pB = points[i + 1];
+        const midY = (pA.y + pB.y) / 2;
+        d += ` C ${pA.x} ${midY}, ${pB.x} ${midY}, ${pB.x} ${pB.y}`;
+      }
+
+      pathFill.setAttribute('d', d);
+
+      const length = pathFill.getTotalLength();
+      pathFill.style.strokeDasharray = `${length}`;
+      pathFill.style.strokeDashoffset = `${length}`;
+
+      return length;
+    }
+
+    const pathLength = renderPath();
+    if (!pathLength) return;
+
+    // Animate the route fill line on scroll with GSAP ScrollTrigger (NO PRE-LINE)
+    gsap.to(pathFill, {
+      strokeDashoffset: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#experience-route-container',
+        start: 'top 70%',
+        end: 'bottom 85%',
+        scrub: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          // Reveal nodes and cards with transition animation as line connects to them
+          nodes.forEach((node, idx) => {
+            const milestoneProgress = idx / (nodes.length - 1);
+            if (progress >= milestoneProgress * 0.94) {
+              node.classList.add('node-connected');
+              if (stations[idx]) stations[idx].classList.add('card-connected');
+            } else {
+              node.classList.remove('node-connected');
+              if (stations[idx]) stations[idx].classList.remove('card-connected');
+            }
+          });
+        }
+      }
+    });
+
+    // Re-render path on window resize
+    window.addEventListener('resize', () => {
+      renderPath();
+      ScrollTrigger.refresh();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupRouteMapAnimation);
+  } else {
+    setupRouteMapAnimation();
+  }
+</script>

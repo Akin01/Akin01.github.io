@@ -1,0 +1,943 @@
+---
+// src/components/ProjectsSection.astro
+interface Project {
+  id: string;
+  title: string;
+  badge: string;
+  badgeType: "org" | "pinned" | "production" | "package";
+  category: "systems" | "ai" | "saas" | "spatial";
+  lang: string;
+  stars?: number;
+  description: string;
+  architectureHighlight: string;
+  tags: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  metrics?: string;
+  angle: number;
+  image: string;
+}
+
+const projects: Project[] = [
+  {
+    id: "pfrsim",
+    title: "pfrsim (Peatland Fire Simulator)",
+    badge: "GITHUB PINNED // AI & SPATIAL",
+    badgeType: "pinned",
+    category: "ai",
+    lang: "Rust / TypeScript",
+    stars: 1,
+    description: "Tropical Peatland Fire Risk Simulator desktop application built with Rust and Tauri v2. Features real-time 3D peatland moisture depth rendering, timeframe simulation, and deep learning forecasting based on the Peatland Fire Vulnerability Index (PFVI).",
+    architectureHighlight: "Tauri v2 + Rust native engine combined with 3D WebGL depth meshes and integrated LSTM forecasting models for environmental disaster prevention.",
+    tags: ["Rust", "Tauri v2", "Deep Learning", "Three.js", "WebGL", "PFVI"],
+    githubUrl: "https://github.com/Akin01/pfrsim",
+    metrics: "3D WebGL // DL Forecasting",
+    angle: -2.8,
+    image: "/readme_pfrsim.webp"
+  },
+  {
+    id: "tanggapi-aceh",
+    title: "Tanggapi Aceh (Flood Spatial Platform)",
+    badge: "PRODUCTION // GOV PLATFORM",
+    badgeType: "production",
+    category: "spatial",
+    lang: "TypeScript / WebGL",
+    description: "Spatial analytics platform for real-time flood monitoring and disaster response for Aceh Province. Engineered optimistic rendering by moving heavy spatial geo-computation to Web Workers and rendering dynamic inundation vectors via WebGL at 60 FPS.",
+    architectureHighlight: "Zero DOM jank: CPU-intensive topological polygons calculated in background Web Workers while MapLibre GL renders at a steady 60 FPS.",
+    tags: ["MapLibre GL", "WebGL", "Web Workers", "Spatial Analytics", "WebSockets"],
+    liveUrl: "https://tanggapi.acehprov.go.id",
+    metrics: "60 FPS WebGL // Real-Time Alert",
+    angle: 3.2,
+    image: "/project_tanggapi_aceh.webp"
+  },
+  {
+    id: "solid-email",
+    title: "solid-email",
+    badge: "GITHUB PINNED // LIBRARY",
+    badgeType: "pinned",
+    category: "systems",
+    lang: "TypeScript",
+    stars: 16,
+    description: "High-performance JSX email template engine for the SolidJS ecosystem. Engineered for ultra-fast compilation speeds and bulletproof cross-client rendering consistency across Outlook, Gmail, Apple Mail, and mobile clients.",
+    architectureHighlight: "Zero-runtime JSX template compilation generating normalized HTML compliant with fragile legacy email rendering engines.",
+    tags: ["SolidJS", "TypeScript", "JSX", "Compiler", "HTML Email"],
+    githubUrl: "https://github.com/Akin01/solid-email",
+    metrics: "16+ Stars // Zero Runtime",
+    angle: -1.9,
+    image: "/readme_solid_email.webp"
+  },
+  {
+    id: "fastrpc",
+    title: "fastrpc",
+    badge: "GITHUB PINNED // PROTOCOL",
+    badgeType: "pinned",
+    category: "systems",
+    lang: "TypeScript / Deno",
+    stars: 2,
+    description: "High-performance RPC framework for Deno. Replaces heavyweight HTTP/JSON overhead with raw persistent TCP streams and MessagePack binary serialization, featuring automatic socket connection pooling and distributed OpenTelemetry tracing.",
+    architectureHighlight: "Sub-2ms median round-trip latency over raw TCP streams with zero-copy packet slicing and distributed tracing instrumentation.",
+    tags: ["Deno", "TCP Transport", "MessagePack", "OpenTelemetry", "RPC"],
+    githubUrl: "https://github.com/Akin01/fastrpc",
+    metrics: "Raw TCP // MessagePack // Sub-2ms",
+    angle: 2.7,
+    image: "/readme_fastrpc.webp"
+  },
+  {
+    id: "deno-redis",
+    title: "deno-redis",
+    badge: "GITHUB PINNED // JSR PACKAGE",
+    badgeType: "package",
+    category: "systems",
+    lang: "TypeScript",
+    stars: 4,
+    description: "Modern, fully-typed Redis client for Deno published on JSR. Designed with low-allocation buffer pipelines, connection pooling, and strict TypeScript types for high-throughput microservices and distributed caching.",
+    architectureHighlight: "Low-allocation buffer pipelines and zero-copy byte extraction adhering strictly to RESP3/RESP2 protocol specifications.",
+    tags: ["Deno", "JSR", "Redis", "RESP3", "Buffer Pipeline", "Connection Pool"],
+    githubUrl: "https://github.com/Akin01/deno-redis",
+    metrics: "Published on JSR // 0 Allocs",
+    angle: -3.4,
+    image: "/readme_deno_redis.webp"
+  },
+  {
+    id: "markov-rs",
+    title: "markov-rs (markovify-rs)",
+    badge: "GITHUB PINNED // CRATES.IO",
+    badgeType: "package",
+    category: "ai",
+    lang: "Rust",
+    stars: 3,
+    description: "High-performance Markov chain text generator and probabilistic modeling library in Rust. Published on Crates.io (markovify-rs), featuring n-gram state modeling, sentence synthesis, low memory footprint, and JSON model serialization.",
+    architectureHighlight: "Memory-compact probabilistic state graphs in Rust with Serde-based fast model persistence.",
+    tags: ["Rust", "Crates.io", "N-Gram", "Probabilistic ML", "Serde"],
+    githubUrl: "https://github.com/Akin01/markov-rs",
+    metrics: "Crates.io Package // High Throughput",
+    angle: 1.8,
+    image: "/readme_markov_rs.webp"
+  },
+  {
+    id: "petdata",
+    title: "Petdata.id (Veterinary SaaS)",
+    badge: "COMMERCIAL SAAS // PRODUCTION",
+    badgeType: "production",
+    category: "saas",
+    lang: "TypeScript / SQL",
+    description: "Full-scale veterinary clinic management SaaS in Indonesia built with Astro, TypeScript, and SQL. Integrates electronic medical records (EMR), point-of-sale cashiering, multi-location inventory, staff scheduling, and real-time financial reporting.",
+    architectureHighlight: "High-velocity Astro + TypeScript architecture delivering lightning-fast page transitions with strict multi-tenant relational data integrity.",
+    tags: ["Astro", "TypeScript", "SQL", "SaaS", "EMR", "Financial Reports"],
+    liveUrl: "https://petdata.id",
+    metrics: "Live Commercial Clinics SaaS",
+    angle: -2.2,
+    image: "/project_petdata.webp"
+  },
+  {
+    id: "frac",
+    title: "Frac.run (Crypto Intelligence)",
+    badge: "EDGE WEBSOCKETS // FINTECH",
+    badgeType: "production",
+    category: "saas",
+    lang: "SolidJS / Cloudflare",
+    description: "Real-time crypto intelligence dashboard featuring live Binance WebSocket streams, sentiment heatmaps, and financial analytics deployed entirely on Cloudflare Workers and D1 database at the edge.",
+    architectureHighlight: "Zero-lag reactive DOM rendering using SolidJS paired with Cloudflare edge Workers and real-time Binance WebSocket streaming feeds.",
+    tags: ["SolidJS", "Cloudflare Workers", "Cloudflare D1", "WebSockets", "TanStack"],
+    liveUrl: "https://frac.run",
+    metrics: "Real-Time WebSocket Streams",
+    angle: 2.9,
+    image: "/project_frac.webp"
+  },
+  {
+    id: "portaverse",
+    title: "Portaverse Pelindo KMS",
+    badge: "ENTERPRISE BACKEND // OPTIMIZATION",
+    badgeType: "production",
+    category: "systems",
+    lang: "Node.js / MySQL / Redis",
+    description: "Enterprise Knowledge Management System (KMS) SaaS platform for PT Pelindo partners. Conducted query plan analysis (EXPLAIN), strategic index structuring, and in-memory algorithm restructuring to eliminate heavy peak bottlenecks.",
+    architectureHighlight: "Sub-second query latencies achieved on multi-million row datasets via MySQL EXPLAIN execution plan tuning and distributed Redis caching.",
+    tags: ["MySQL EXPLAIN", "Redis Caching", "REST API", "Enterprise KMS"],
+    metrics: "Sub-second Latency // MySQL Tuning",
+    angle: 2.4,
+    image: "/project_portaverse.webp",
+    liveUrl: "https://portaverse.pelindo.co.id/login"
+  }
+];
+---
+
+<section class="py-20 bg-[#07080d] border-b border-[#202534] overflow-hidden" id="projects">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Header (Prefix title only, no big title, no divider) -->
+    <div class="mb-8">
+      <h2 class="font-mono text-xs sm:text-sm text-cyan-400 tracking-widest font-semibold uppercase">
+        // PINNED PROJECTS & DELIVERABLES
+      </h2>
+    </div>
+
+    <!-- Stage Grid: Centered by default; on desktop, moves to lg:col-span-5 and opens unbordered details on lg:col-span-7 -->
+    <div class="magic-deck-container relative w-full py-6" id="projects-stage-wrapper">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start" id="stage-grid">
+        
+        <!-- Left: The Card Stack Column (lg:col-span-12 by default, moves to lg:col-span-5 on desktop click) -->
+        <div id="deck-column" class="lg:col-span-12 flex flex-col items-center">
+          
+          <!-- 3-Stack Card Deck Container -->
+          <div class="relative w-full max-w-xl sm:max-w-2xl h-122.5 sm:h-127.5 flex items-center justify-center" id="card-deck">
+            {projects.map((proj, idx) => {
+              const badgeColor = proj.badgeType === 'org' 
+                ? 'bg-[#1e1318] text-rose-300 border-[#3d202e]' 
+                : proj.badgeType === 'pinned'
+                ? 'bg-[#0e1922] text-cyan-300 border-[#1c384a]'
+                : proj.badgeType === 'package'
+                ? 'bg-[#1c1810] text-amber-300 border-[#382d18]'
+                : 'bg-[#0f1d17] text-emerald-300 border-[#193a2b]';
+
+              return (
+                <article 
+                  class="magic-card absolute top-0 left-0 w-full h-full flat-panel p-5 sm:p-6 border border-[#262c3e] bg-[#0c0e16]/90 backdrop-blur-sm shadow-2xl cursor-pointer select-none overflow-hidden will-change-transform"
+                  data-category={proj.category}
+                  data-pinned={proj.badgeType === "org" || proj.badgeType === "pinned" || proj.badgeType === "package" ? "true" : "false"}
+                  data-angle={proj.angle}
+                  data-card-index={idx}
+                  style={`--init-angle: ${proj.angle}deg; transform: rotate(${proj.angle}deg); touch-action: none; user-select: none;`}
+                >
+                  <!-- Card Face: FRONT (Preview View) -->
+                  <div class="card-face-front w-full h-full flex flex-col justify-between space-y-3 pointer-events-none will-change-transform">
+                    <!-- Badges Row -->
+                    <div class="flex items-center justify-between gap-2 shrink-0">
+                      <span class={`px-2 py-0.5 text-[10px] font-mono font-bold tracking-wider uppercase border ${badgeColor}`}>
+                        {proj.badge}
+                      </span>
+
+                      {proj.stars && (
+                        <div class="flex items-center gap-1 font-mono text-xs text-amber-300 bg-[#1c1810] px-2 py-0.5 border border-[#382d18]">
+                          <span>★</span>
+                          <span class="font-bold">{proj.stars}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <!-- Real README / Web Screenshot Preview -->
+                    <div class="relative w-full flex-1 aspect-16/10 max-h-60 sm:max-h-65 bg-black border border-[#202636] overflow-hidden shrink-0">
+                      <img 
+                        src={proj.image} 
+                        alt={`${proj.title} README`}
+                        class="w-full h-full object-cover object-top pointer-events-none" 
+                        loading="lazy" 
+                        decoding="async"
+                        draggable="false"
+                      />
+                    </div>
+
+                    <!-- Title, Engine & SPECS Trigger Button -->
+                    <div class="flex items-center justify-between pt-1 shrink-0">
+                      <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">
+                          {proj.title}
+                        </h3>
+                        <div class="font-mono text-[11px] text-slate-400 mt-0.5">
+                          Engine: <span class="text-cyan-400 font-semibold">{proj.lang}</span>
+                        </div>
+                      </div>
+
+                      <button 
+                        type="button" 
+                        class="card-specs-btn text-[10px] font-mono text-cyan-400 px-3 py-1.5 bg-[#121622] border border-[#222b3e] flex items-center gap-1 hover:border-cyan-400 hover:bg-[#1a2030] transition-colors pointer-events-auto cursor-pointer"
+                        title="View project architecture specifications on this card"
+                      >
+                        <span>SPECS</span>
+                        <span>&rarr;</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Card Face: DETAIL FOR MOBILE (Slides in ON THE CARD on mobile devices) -->
+                  <div class="card-face-detail lg:hidden absolute inset-0 p-5 sm:p-6 bg-[#0c0e16]/92 backdrop-blur-md w-full h-full flex flex-col justify-between overflow-y-auto translate-x-full opacity-0 pointer-events-none z-20 will-change-transform">
+                    <div class="flex items-center justify-between pb-2.5 border-b border-[#202534] shrink-0">
+                      <button 
+                        type="button" 
+                        class="card-preview-back-btn flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-mono text-xs font-bold py-1 px-2.5 border border-[#202534] bg-[#121622] hover:border-cyan-500/50 transition-colors pointer-events-auto cursor-pointer"
+                      >
+                        <span>&larr;</span>
+                        <span>PREVIEW</span>
+                      </button>
+
+                      <div class="flex items-center gap-2">
+                        <span class={`px-2 py-0.5 text-[10px] font-mono font-bold tracking-wider uppercase border ${badgeColor}`}>
+                          {proj.badge}
+                        </span>
+                        {proj.stars && (
+                          <span class="px-2 py-0.5 text-xs font-mono text-amber-300 bg-[#1c1810] border border-[#382d18]">★ {proj.stars}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    <!-- Title & Description -->
+                    <div class="space-y-1.5 py-1 shrink-0 font-mono">
+                      <h3 class="text-base sm:text-lg font-bold text-white">
+                        {proj.title}
+                      </h3>
+                      <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                        {proj.description}
+                      </p>
+                    </div>
+
+                    <!-- Architecture Spec Callout -->
+                    <div class="space-y-1 font-mono bg-[#090b10] p-2.5 border border-[#1b212f] shrink-0">
+                      <div class="text-cyan-400 text-[10px] uppercase font-bold tracking-wider">
+                        // ARCHITECTURE SPEC
+                      </div>
+                      <p class="text-slate-300 font-sans text-[11px] leading-relaxed">
+                        {proj.architectureHighlight}
+                      </p>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="flex flex-wrap gap-1 font-mono text-[10px] shrink-0">
+                      {proj.tags.map(t => (
+                        <span class="px-2 py-0.5 bg-[#141824] border border-[#222a3d] text-slate-300">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <!-- Footer Links -->
+                    <div class="pt-2 border-t border-[#202534] flex items-center justify-between text-xs font-mono shrink-0">
+                      <span class="text-[10px] text-slate-400 font-medium">{proj.metrics || ''}</span>
+                      <div class="flex items-center gap-3">
+                        {proj.githubUrl && (
+                          <a href={proj.githubUrl} target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-cyan-400 font-bold flex items-center gap-1 transition-colors pointer-events-auto">
+                            <span>View Code</span>
+                            <span>&rarr;</span>
+                          </a>
+                        )}
+                        {proj.liveUrl && (
+                          <a href={proj.liveUrl} target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1 transition-colors pointer-events-auto">
+                            <span>Live App</span>
+                            <span>&rarr;</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+
+          <!-- Bottom Button / Line Arrow to Advance (Click to advance, or drag card) -->
+          <button 
+            type="button"
+            id="swipe-instruction-arrow"
+            class="flex items-center justify-center gap-3 mt-6 font-mono text-xs select-none cursor-pointer group bg-transparent border-none outline-none hover:text-white transition-colors"
+            title="Click to advance next project or swipe card"
+          >
+            <span class="text-slate-400 text-xs font-semibold group-hover:text-cyan-400 transition-colors">// DRAG OR SWIPE</span>
+            <div class="flex items-center">
+              <span class="inline-block w-20 sm:w-28 h-px bg-cyan-400 group-hover:w-32 transition-all"></span>
+              <svg class="w-4 h-4 text-cyan-400 -ml-1 inline-block transform group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </div>
+            <span class="text-cyan-400 font-bold text-xs uppercase tracking-wider group-hover:text-cyan-300">NEXT PROJECT &rarr;</span>
+          </button>
+        </div>
+
+        <!-- Right: Unbordered Desktop Specifications Panel (Retained for Desktop Split-Screen) -->
+        <div id="details-column" class="hidden lg:col-span-7 opacity-0 will-change-transform">
+          <div class="p-2 sm:p-5 space-y-5" id="project-details-card">
+            <!-- Dynamic project specifications populated on desktop card click -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const projectsData = [
+    {
+      id: "pfrsim",
+      title: "pfrsim (Peatland Fire Simulator)",
+      badge: "GITHUB PINNED // AI & SPATIAL",
+      badgeType: "pinned",
+      lang: "Rust / TypeScript",
+      stars: 1,
+      description: "Tropical Peatland Fire Risk Simulator desktop application built with Rust and Tauri v2. Features real-time 3D peatland moisture depth rendering, timeframe simulation, and deep learning forecasting based on the Peatland Fire Vulnerability Index (PFVI).",
+      architectureHighlight: "Tauri v2 + Rust native engine combined with 3D WebGL depth meshes and integrated LSTM forecasting models for environmental disaster prevention.",
+      tags: ["Rust", "Tauri v2", "Deep Learning", "Three.js", "WebGL", "PFVI"],
+      githubUrl: "https://github.com/Akin01/pfrsim",
+      metrics: "3D WebGL // DL Forecasting"
+    },
+    {
+      id: "tanggapi-aceh",
+      title: "Tanggapi Aceh (Flood Spatial Platform)",
+      badge: "PRODUCTION // GOV PLATFORM",
+      badgeType: "production",
+      lang: "TypeScript / WebGL",
+      description: "Spatial analytics platform for real-time flood monitoring and disaster response for Aceh Province. Engineered optimistic rendering by moving heavy spatial geo-computation to Web Workers and rendering dynamic inundation vectors via WebGL at 60 FPS.",
+      architectureHighlight: "Zero DOM jank: CPU-intensive topological polygons calculated in background Web Workers while MapLibre GL renders at a steady 60 FPS.",
+      tags: ["MapLibre GL", "WebGL", "Web Workers", "Spatial Analytics", "WebSockets"],
+      liveUrl: "https://tanggapi.acehprov.go.id",
+      metrics: "60 FPS WebGL // Real-Time Alert"
+    },
+    {
+      id: "solid-email",
+      title: "solid-email",
+      badge: "GITHUB PINNED // LIBRARY",
+      badgeType: "pinned",
+      lang: "TypeScript",
+      stars: 16,
+      description: "High-performance JSX email template engine for the SolidJS ecosystem. Engineered for ultra-fast compilation speeds and bulletproof cross-client rendering consistency across Outlook, Gmail, Apple Mail, and mobile clients.",
+      architectureHighlight: "Zero-runtime JSX template compilation generating normalized HTML compliant with fragile legacy email rendering engines.",
+      tags: ["SolidJS", "TypeScript", "JSX", "Compiler", "HTML Email"],
+      githubUrl: "https://github.com/Akin01/solid-email",
+      metrics: "16+ Stars // Zero Runtime"
+    },
+    {
+      id: "fastrpc",
+      title: "fastrpc",
+      badge: "GITHUB PINNED // PROTOCOL",
+      badgeType: "pinned",
+      lang: "TypeScript / Deno",
+      stars: 2,
+      description: "High-performance RPC framework for Deno. Replaces heavyweight HTTP/JSON overhead with raw persistent TCP streams and MessagePack binary serialization, featuring automatic socket connection pooling and distributed OpenTelemetry tracing.",
+      architectureHighlight: "Sub-2ms median round-trip latency over raw TCP streams with zero-copy packet slicing and distributed tracing instrumentation.",
+      tags: ["Deno", "TCP Transport", "MessagePack", "OpenTelemetry", "RPC"],
+      githubUrl: "https://github.com/Akin01/fastrpc",
+      metrics: "Raw TCP // MessagePack // Sub-2ms"
+    },
+    {
+      id: "deno-redis",
+      title: "deno-redis",
+      badge: "GITHUB PINNED // JSR PACKAGE",
+      badgeType: "package",
+      lang: "TypeScript",
+      stars: 4,
+      description: "Modern, fully-typed Redis client for Deno published on JSR. Designed with low-allocation buffer pipelines, connection pooling, and strict TypeScript types for high-throughput microservices and distributed caching.",
+      architectureHighlight: "Low-allocation buffer pipelines and zero-copy byte extraction adhering strictly to RESP3/RESP2 protocol specifications.",
+      tags: ["Deno", "JSR", "Redis", "RESP3", "Buffer Pipeline", "Connection Pool"],
+      githubUrl: "https://github.com/Akin01/deno-redis",
+      metrics: "Published on JSR // 0 Allocs"
+    },
+    {
+      id: "markov-rs",
+      title: "markov-rs (markovify-rs)",
+      badge: "GITHUB PINNED // CRATES.IO",
+      badgeType: "package",
+      lang: "Rust",
+      stars: 3,
+      description: "High-performance Markov chain text generator and probabilistic modeling library in Rust. Published on Crates.io (markovify-rs), featuring n-gram state modeling, sentence synthesis, low memory footprint, and JSON model serialization.",
+      architectureHighlight: "Memory-compact probabilistic state graphs in Rust with Serde-based fast model persistence.",
+      tags: ["Rust", "Crates.io", "N-Gram", "Probabilistic ML", "Serde"],
+      githubUrl: "https://github.com/Akin01/markov-rs",
+      metrics: "Crates.io Package // High Throughput"
+    },
+    {
+      id: "petdata",
+      title: "Petdata.id (Veterinary SaaS)",
+      badge: "COMMERCIAL SAAS // PRODUCTION",
+      badgeType: "production",
+      lang: "TypeScript / SQL",
+      description: "Full-scale veterinary clinic management SaaS in Indonesia built with Astro, TypeScript, and SQL. Integrates electronic medical records (EMR), point-of-sale cashiering, multi-location inventory, staff scheduling, and real-time financial reporting.",
+      architectureHighlight: "High-velocity Astro + TypeScript architecture delivering lightning-fast page transitions with strict multi-tenant relational data integrity.",
+      tags: ["Astro", "TypeScript", "SQL", "SaaS", "EMR", "Financial Reports"],
+      liveUrl: "https://petdata.id",
+      metrics: "Live Commercial Clinics SaaS"
+    },
+    {
+      id: "frac",
+      title: "Frac.run (Crypto Intelligence)",
+      badge: "EDGE WEBSOCKETS // FINTECH",
+      badgeType: "production",
+      lang: "SolidJS / Cloudflare",
+      description: "Real-time crypto intelligence dashboard featuring live Binance WebSocket streams, sentiment heatmaps, and financial analytics deployed entirely on Cloudflare Workers and D1 database at the edge.",
+      architectureHighlight: "Zero-lag reactive DOM rendering using SolidJS paired with Cloudflare edge Workers and real-time Binance WebSocket streaming feeds.",
+      tags: ["SolidJS", "Cloudflare Workers", "Cloudflare D1", "WebSockets", "TanStack"],
+      liveUrl: "https://frac.run",
+      metrics: "Real-Time WebSocket Streams"
+    },
+    {
+      id: "portaverse",
+      title: "Portaverse Pelindo KMS",
+      badge: "ENTERPRISE BACKEND // OPTIMIZATION",
+      badgeType: "production",
+      lang: "Node.js / MySQL / Redis",
+      description: "Enterprise Knowledge Management System (KMS) SaaS platform for PT Pelindo partners. Conducted query plan analysis (EXPLAIN), strategic index structuring, and in-memory algorithm restructuring to eliminate heavy peak bottlenecks.",
+      architectureHighlight: "Sub-second query latencies achieved on multi-million row datasets via MySQL EXPLAIN execution plan tuning and distributed Redis caching.",
+      tags: ["MySQL EXPLAIN", "Redis Caching", "REST API", "Enterprise KMS"],
+      metrics: "Sub-second Latency // MySQL Tuning",
+      liveUrl: "https://portaverse.pelindo.co.id/login"
+    }
+  ];
+
+  let visibleCards: HTMLElement[] = [];
+  let currentCardIndex = 0;
+  let isSwiping = false;
+  let isPointerInteracting = false;
+  let autoSwipeTimer: any = null;
+  let isDesktopSplitOpen = false;
+  let isMobileDetailOpen = false;
+  const AUTO_SWIPE_INTERVAL = 4500;
+
+  const deckColumn = document.getElementById('deck-column');
+  const detailsColumn = document.getElementById('details-column');
+  const detailsCard = document.getElementById('project-details-card');
+  const nextButton = document.getElementById('swipe-instruction-arrow');
+  const stageWrapper = document.getElementById('projects-stage-wrapper');
+
+  function startAutoSwipe() {
+    stopAutoSwipe();
+    autoSwipeTimer = setInterval(() => {
+      if (isDesktopSplitOpen || isMobileDetailOpen || isPointerInteracting || isSwiping || document.hidden) return;
+      magicSwipeNext();
+    }, AUTO_SWIPE_INTERVAL);
+  }
+
+  function stopAutoSwipe() {
+    if (autoSwipeTimer) {
+      clearInterval(autoSwipeTimer);
+      autoSwipeTimer = null;
+    }
+  }
+
+  function resetAutoSwipe() {
+    startAutoSwipe();
+  }
+
+  // --- MOBILE BEHAVIOR: In-Card Slide Transition (Detail stays on the card) ---
+  function toggleMobileCardDetail(card: HTMLElement, forceOpen?: boolean) {
+    const frontFace = card.querySelector('.card-face-front') as HTMLElement | null;
+    const detailFace = card.querySelector('.card-face-detail') as HTMLElement | null;
+    if (!frontFace || !detailFace) return;
+
+    const shouldOpen = forceOpen !== undefined ? forceOpen : !isMobileDetailOpen;
+    isMobileDetailOpen = shouldOpen;
+
+    if (shouldOpen) {
+      gsap.to(card, { rotation: 0, duration: 0.22, ease: 'power2.out' });
+      gsap.to(frontFace, { x: '-100%', opacity: 0, duration: 0.22, ease: 'power2.out' });
+      detailFace.style.pointerEvents = 'auto';
+      gsap.fromTo(detailFace, 
+        { x: '100%', opacity: 0 },
+        { x: '0%', opacity: 1, duration: 0.24, ease: 'power2.out' }
+      );
+    } else {
+      startAutoSwipe();
+      const angle = parseFloat(card.getAttribute('data-angle') || '0');
+      gsap.to(card, { rotation: angle * 0.4, duration: 0.2, ease: 'power2.out' });
+      detailFace.style.pointerEvents = 'none';
+      gsap.to(detailFace, { x: '100%', opacity: 0, duration: 0.2, ease: 'power2.in' });
+      gsap.fromTo(frontFace,
+        { x: '-100%', opacity: 0 },
+        { x: '0%', opacity: 1, duration: 0.22, ease: 'power2.out' }
+      );
+    }
+  }
+
+  function resetAllMobileCardDetails() {
+    isMobileDetailOpen = false;
+    visibleCards.forEach(c => {
+      const front = c.querySelector('.card-face-front') as HTMLElement | null;
+      const detail = c.querySelector('.card-face-detail') as HTMLElement | null;
+      if (front) gsap.set(front, { x: '0%', opacity: 1 });
+      if (detail) {
+        detail.style.pointerEvents = 'none';
+        gsap.set(detail, { x: '100%', opacity: 0 });
+      }
+    });
+  }
+
+  // --- DESKTOP BEHAVIOR: Retained Split-Screen Layout (Moves deck left, opens unbordered panel right) ---
+  function renderDesktopDetailsPanel(data: typeof projectsData[0]) {
+    if (!detailsCard) return;
+
+    const badgeColor = data.badgeType === 'pinned'
+      ? 'bg-[#0e1922] text-cyan-300 border-[#1c384a]'
+      : data.badgeType === 'package'
+      ? 'bg-[#1c1810] text-amber-300 border-[#382d18]'
+      : 'bg-[#0f1d17] text-emerald-300 border-[#193a2b]';
+
+    detailsCard.innerHTML = `
+      <div class="flex items-center justify-between pb-3 border-b border-[#202534]">
+        <div class="flex items-center gap-2">
+          <span class="px-2 py-0.5 text-[10px] font-mono font-bold tracking-wider uppercase border ${badgeColor}">
+            ${data.badge}
+          </span>
+          ${data.stars ? `<span class="px-2 py-0.5 text-xs font-mono text-amber-300 bg-[#1c1810] border border-[#382d18]">★ ${data.stars}</span>` : ''}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-white">
+          ${data.title}
+        </h3>
+        <div class="font-mono text-xs text-slate-400 mt-1">
+          Engine: <span class="text-cyan-400 font-semibold">${data.lang}</span>
+        </div>
+      </div>
+
+      <p class="text-sm sm:text-base text-slate-200 leading-relaxed font-sans">
+        ${data.description}
+      </p>
+
+      <div class="space-y-1.5 font-mono">
+        <div class="text-cyan-400 text-xs uppercase font-bold tracking-wider">
+          // ARCHITECTURE SPEC
+        </div>
+        <p class="text-slate-300 font-sans text-xs sm:text-sm leading-relaxed">
+          ${data.architectureHighlight}
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-1.5 pt-1 font-mono text-xs">
+        ${data.tags.map(t => `<span class="px-2.5 py-0.5 bg-[#141824] border border-[#222a3d] text-slate-300 text-[11px]">${t}</span>`).join('')}
+      </div>
+
+      <div class="pt-4 border-t border-[#202534] flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
+        <span class="text-[11px] text-slate-400 font-medium">${data.metrics || ''}</span>
+        <div class="flex items-center gap-3">
+          ${data.githubUrl ? `
+            <a href="${data.githubUrl}" target="_blank" rel="noopener noreferrer" class="text-slate-300 hover:text-cyan-400 font-bold flex items-center gap-1 transition-colors">
+              <span>View Code</span>
+              <span>&rarr;</span>
+            </a>` : ''
+          }
+          ${data.liveUrl ? `
+            <a href="${data.liveUrl}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1 transition-colors">
+              <span>Live App</span>
+              <span>&rarr;</span>
+            </a>` : ''
+          }
+        </div>
+      </div>
+    `;
+  }
+
+  function openDesktopDetailsMode() {
+    if (isDesktopSplitOpen) return;
+    isDesktopSplitOpen = true;
+    stopAutoSwipe();
+    const currentCard = visibleCards[currentCardIndex];
+    if (!currentCard) return;
+    const dataIndex = parseInt(currentCard.getAttribute('data-card-index') || '0', 10);
+    const data = projectsData[dataIndex];
+    renderDesktopDetailsPanel(data);
+
+    if (deckColumn && detailsColumn) {
+      deckColumn.classList.remove('lg:col-span-12', 'items-center');
+      deckColumn.classList.add('lg:col-span-5', 'lg:items-start');
+
+      detailsColumn.classList.remove('hidden');
+      gsap.fromTo(detailsColumn, 
+        { opacity: 0, x: 15 },
+        { opacity: 1, x: 0, duration: 0.22, ease: 'power2.out' }
+      );
+    }
+
+    layoutDeck();
+  }
+
+  function closeDesktopDetailsMode() {
+    if (!isDesktopSplitOpen) return;
+    isDesktopSplitOpen = false;
+    startAutoSwipe();
+    if (detailsColumn && deckColumn) {
+      // 1. Immediately re-center the deck with zero delay
+      deckColumn.classList.remove('lg:col-span-5', 'lg:items-start');
+      deckColumn.classList.add('lg:col-span-12', 'items-center');
+      layoutDeck();
+
+      // 2. Concurrently fade out the details panel quickly
+      gsap.to(detailsColumn, {
+        opacity: 0,
+        duration: 0.15,
+        ease: 'power2.in',
+        onComplete: () => {
+          detailsColumn.classList.add('hidden');
+        }
+      });
+    }
+  }
+
+  // Visual 3-Stack Display (Card 1 Front, Card 2 Middle, Card 3 Back)
+  function layoutDeck() {
+    if (visibleCards.length === 0) return;
+
+    visibleCards.forEach((card, idx) => {
+      const angle = parseFloat(card.getAttribute('data-angle') || '0');
+      const diff = (idx - currentCardIndex + visibleCards.length) % visibleCards.length;
+
+      // Attach pointer listener to front card
+      attachCardEvents(card, diff === 0);
+
+      if (diff === 0) {
+        // Card 1: Front Spotlight
+        gsap.to(card, {
+          x: 0,
+          y: 0,
+          rotation: isDesktopSplitOpen || isMobileDetailOpen ? 0 : angle * 0.4,
+          scale: 1,
+          opacity: 1,
+          zIndex: 30,
+          duration: 0.28,
+          ease: 'power2.out',
+        });
+        card.style.pointerEvents = 'auto';
+      } else if (diff === 1) {
+        // Card 2: Middle of 3-stack (Increased overflow to the right)
+        gsap.to(card, {
+          x: isDesktopSplitOpen ? -35 : 70,
+          y: isDesktopSplitOpen ? 18 : -18,
+          rotation: isDesktopSplitOpen ? 1.8 : angle * 1.6,
+          scale: 0.93,
+          opacity: 0.84,
+          zIndex: 20,
+          duration: 0.28,
+          ease: 'power2.out',
+        });
+        card.style.pointerEvents = 'none';
+      } else if (diff === 2) {
+        // Card 3: Back of 3-stack (Increased overflow to the left)
+        gsap.to(card, {
+          x: isDesktopSplitOpen ? -62 : -60,
+          y: isDesktopSplitOpen ? 32 : -30,
+          rotation: isDesktopSplitOpen ? 3.4 : -angle * 2.0,
+          scale: 0.86,
+          opacity: 0.68,
+          zIndex: 10,
+          duration: 0.30,
+          ease: 'power2.out',
+        });
+        card.style.pointerEvents = 'none';
+      } else {
+        // Deeper cards hidden behind with subtle upper peek
+        gsap.to(card, {
+          x: 0,
+          y: -42,
+          rotation: angle,
+          scale: 0.80,
+          opacity: 0,
+          zIndex: 1,
+          duration: 0.25,
+          overwrite: 'auto'
+        });
+        card.style.pointerEvents = 'none';
+      }
+    });
+  }
+
+  // Magic Card Swipe Next (Advances to next project in deck)
+  function magicSwipeNext() {
+    if (isSwiping || visibleCards.length <= 1) return;
+    isSwiping = true;
+    setTimeout(() => { isSwiping = false; }, 320);
+    resetAutoSwipe();
+    resetAllMobileCardDetails();
+
+    const currentCard = visibleCards[currentCardIndex];
+    if (!currentCard) {
+      isSwiping = false;
+      return;
+    }
+    const angle = parseFloat(currentCard.getAttribute('data-angle') || '0');
+
+    // 1. Current card magically sweeps off to the right
+    gsap.to(currentCard, {
+      x: 520,
+      y: -25,
+      rotation: angle + 25,
+      duration: 0.26,
+      ease: 'power3.in',
+      onComplete: () => {
+        currentCardIndex = (currentCardIndex + 1) % visibleCards.length;
+
+        // Reset the swiped card behind the stack
+        gsap.set(currentCard, {
+          x: 0,
+          y: -35,
+          rotation: angle,
+          scale: 0.8,
+          opacity: 0,
+          zIndex: 1
+        });
+
+        if (isDesktopSplitOpen) {
+          const nextDataIndex = parseInt(visibleCards[currentCardIndex].getAttribute('data-card-index') || '0', 10);
+          renderDesktopDetailsPanel(projectsData[nextDataIndex]);
+        }
+
+        layoutDeck();
+        isSwiping = false;
+      }
+    });
+
+    // 2. Next card steps into spotlight
+    const nextIndex = (currentCardIndex + 1) % visibleCards.length;
+    const nextCard = visibleCards[nextIndex];
+    if (nextCard) {
+      gsap.to(nextCard, {
+        x: 0,
+        y: 0,
+        rotation: isDesktopSplitOpen ? 0 : parseFloat(nextCard.getAttribute('data-angle') || '0') * 0.4,
+        scale: 1,
+        opacity: 1,
+        zIndex: 30,
+        duration: 0.28,
+        ease: 'power2.out'
+      });
+    }
+  }
+
+  // Pointer & Drag Interaction on Front Card
+  function attachCardEvents(card: HTMLElement, isFront: boolean) {
+    if (!isFront) {
+      card.onpointerdown = null;
+      card.onpointermove = null;
+      card.onpointerup = null;
+      card.onpointercancel = null;
+      return;
+    }
+
+    let startX = 0;
+    let deltaX = 0;
+    let isDown = false;
+    let hasMoved = false;
+
+    // Attach click listeners to SPECS button
+    const specsBtn = card.querySelector('.card-specs-btn');
+    if (specsBtn) {
+      specsBtn.addEventListener('click', (e: Event) => {
+        e.stopPropagation();
+        const isMobile = window.innerWidth < 1024;
+        if (isMobile) {
+          toggleMobileCardDetail(card, true);
+        } else {
+          openDesktopDetailsMode();
+        }
+      });
+    }
+
+    // Attach click listener to mobile PREVIEW button
+    const backBtn = card.querySelector('.card-preview-back-btn');
+    if (backBtn) {
+      backBtn.addEventListener('click', (e: Event) => {
+        e.stopPropagation();
+        toggleMobileCardDetail(card, false);
+      });
+    }
+    card.onpointerdown = (e: PointerEvent) => {
+      // Ignore click on links or interactive buttons inside the card
+      if ((e.target as HTMLElement)?.closest('a, button')) return;
+
+      isDown = true;
+      hasMoved = false;
+      isPointerInteracting = true;
+      stopAutoSwipe();
+      startX = e.clientX;
+      deltaX = 0;
+      try { card.setPointerCapture(e.pointerId); } catch (_) {}
+    };
+
+    card.onpointermove = (e: PointerEvent) => {
+      if (!isDown) return;
+      deltaX = e.clientX - startX;
+      if (Math.abs(deltaX) > 6) {
+        hasMoved = true;
+      }
+
+      gsap.set(card, {
+        x: deltaX,
+        rotation: deltaX * 0.05,
+        ease: 'none'
+      });
+    };
+
+    card.onpointerup = (e: PointerEvent) => {
+      if (!isDown) return;
+      isDown = false;
+      isPointerInteracting = false;
+      resetAutoSwipe();
+      try { card.releasePointerCapture(e.pointerId); } catch (_) {}
+
+      if (hasMoved && Math.abs(deltaX) > 30) {
+        // Swiped past threshold -> trigger magic swipe!
+        magicSwipeNext();
+      } else if (!hasMoved || Math.abs(deltaX) <= 10) {
+        // Clean Click!
+        const isMobile = window.innerWidth < 1024;
+        if (isMobile) {
+          // Mobile: slide detail directly ON THE CARD (does not open new section)
+          toggleMobileCardDetail(card);
+        } else {
+          // Desktop: retain split-screen
+          if (!isDesktopSplitOpen) {
+            openDesktopDetailsMode();
+          } else {
+            closeDesktopDetailsMode();
+          }
+        }
+      } else {
+        // Snaps back
+        const angle = parseFloat(card.getAttribute('data-angle') || '0');
+        gsap.to(card, {
+          x: 0,
+          rotation: (isDesktopSplitOpen || isMobileDetailOpen) ? 0 : angle * 0.4,
+        duration: 0.20,
+        ease: 'power2.out'
+        });
+      }
+    };
+
+    card.onpointercancel = () => {
+      isDown = false;
+      isPointerInteracting = false;
+      resetAutoSwipe();
+      const angle = parseFloat(card.getAttribute('data-angle') || '0');
+      gsap.to(card, {
+        x: 0,
+        rotation: (isDesktopSplitOpen || isMobileDetailOpen) ? 0 : angle * 0.4,
+        duration: 0.25,
+        ease: 'power2.out'
+      });
+    };
+  }
+
+  // Init
+  visibleCards = Array.from(document.querySelectorAll<HTMLElement>('.magic-card'));
+  layoutDeck();
+  startAutoSwipe();
+
+  // Pause auto-swipe on hover, resume on leave
+  if (stageWrapper) {
+    stageWrapper.addEventListener('mouseenter', stopAutoSwipe);
+    stageWrapper.addEventListener('mouseleave', () => {
+      if (!isDesktopSplitOpen && !isMobileDetailOpen && !isPointerInteracting) startAutoSwipe();
+    });
+  }
+
+  // Advance to next card via bottom button
+  if (nextButton) {
+    nextButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      magicSwipeNext();
+    });
+  }
+
+  // Keyboard navigation
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      magicSwipeNext();
+    } else if (e.key === 'Escape') {
+      if (isDesktopSplitOpen) {
+        closeDesktopDetailsMode();
+      }
+      const currentCard = visibleCards[currentCardIndex];
+      if (currentCard && isMobileDetailOpen) {
+        toggleMobileCardDetail(currentCard, false);
+      }
+    }
+  });
+</script>

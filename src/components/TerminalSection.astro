@@ -1,0 +1,215 @@
+---
+// src/components/TerminalSection.astro
+---
+
+<section class="py-12 sm:py-16 bg-[#07080d] border-b border-[#202534]" id="terminal">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Title (Prefix title only, no big title, no divider) -->
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+      <h2 class="font-mono text-xs sm:text-sm text-cyan-400 tracking-widest font-semibold uppercase">
+        // INTERACTIVE TERMINAL
+      </h2>
+      <div class="font-mono text-[11px] text-slate-400 flex items-center gap-2">
+        <span class="w-1.5 h-1.5 bg-emerald-400 inline-block animate-pulse"></span>
+        <span>SYS://ONLINE [SESSION: ACTIVE]</span>
+      </div>
+    </div>
+
+    <!-- Centered Terminal Shell -->
+    <div class="max-w-4xl mx-auto">
+        <div class="border border-[#262c3e] bg-[#0c0e16] font-mono text-xs shadow-xl">
+          
+          <!-- Terminal Title Bar -->
+          <div class="px-4 py-2.5 bg-[#121622] border-b border-[#222738] flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 bg-rose-500 inline-block"></span>
+              <span class="w-2.5 h-2.5 bg-amber-500 inline-block"></span>
+              <span class="w-2.5 h-2.5 bg-emerald-500 inline-block"></span>
+              <span class="ml-2 text-slate-300 font-semibold text-[11px]">bash - akin@cloud-node-01:~</span>
+            </div>
+            <div>
+              <button 
+                type="button" 
+                id="term-clear-btn"
+                class="text-[10px] text-slate-400 hover:text-white px-2 py-0.5 border border-[#2b3348] bg-[#161a26]"
+              >
+                CLEAR
+              </button>
+            </div>
+          </div>
+
+          <!-- Terminal Output Log -->
+          <div 
+            id="terminal-output" 
+            class="p-4 sm:p-5 h-85 overflow-y-auto space-y-3 leading-relaxed text-slate-300 bg-[#080a10]"
+          >
+            <div>
+              <span class="text-cyan-400 font-bold">Ainul Yaqin Terminal Shell [Version 3.2.0-prod]</span><br/>
+              <span class="text-slate-400">Type <span class="text-cyan-400 font-bold underline cursor-pointer cmd-link" data-cmd="help">help</span> for commands, or click any shortcut to query system details.</span>
+            </div>
+          </div>
+
+          <!-- Terminal Interactive Input Prompt -->
+          <form id="terminal-form" class="px-4 py-2.5 bg-[#0e111a] border-t border-[#222738] flex items-center gap-2">
+            <span class="text-emerald-400 font-bold">akin@yaqin:~$</span>
+            <input 
+              type="text" 
+              id="terminal-input"
+              class="flex-1 bg-transparent border-none outline-none text-slate-100 placeholder-slate-600 font-mono text-xs focus:ring-0"
+              placeholder="type 'help', 'projects', 'skills', or 'contact'..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button type="submit" class="text-cyan-400 hover:text-cyan-300 text-[11px] font-bold px-2.5 py-1">
+              EXEC &crarr;
+            </button>
+          </form>
+
+        </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('terminal-form');
+  const input = document.getElementById('terminal-input') as HTMLInputElement | null;
+  const output = document.getElementById('terminal-output');
+  const clearBtn = document.getElementById('term-clear-btn');
+
+  function appendLog(html: string) {
+    if (!output) return;
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    output.appendChild(div);
+    output.scrollTop = output.scrollHeight;
+  }
+
+  function handleCommand(rawCmd: string) {
+    const cmd = rawCmd.trim().toLowerCase();
+    if (!cmd) return;
+
+    appendLog(`<div class="text-slate-400 font-bold"><span class="text-emerald-400">akin@yaqin:~$</span> ${rawCmd}</div>`);
+
+    switch(cmd) {
+      case 'help':
+        appendLog(`
+          <div class="space-y-1 text-slate-300">
+            <div><span class="text-cyan-400 font-bold">available commands:</span></div>
+            <div>• <span class="text-white font-bold">whoami</span> - Display background & current architecture focus</div>
+            <div>• <span class="text-white font-bold">projects</span> - List open source engines and platforms</div>
+            <div>• <span class="text-white font-bold">skills</span> - Display core languages, runtime and system stack</div>
+            <div>• <span class="text-white font-bold">specs</span> - Display verified system benchmarks & latency metrics</div>
+            <div>• <span class="text-white font-bold">contact</span> - Display communications channels and jump to contact</div>
+            <div>• <span class="text-white font-bold">github</span> - Open official GitHub profile in new tab</div>
+            <div>• <span class="text-white font-bold">clear</span> - Clear current terminal display</div>
+          </div>
+        `);
+        break;
+
+      case 'whoami':
+        appendLog(`
+          <div class="space-y-1 text-slate-300">
+            <div>Name: <strong class="text-white font-bold">Ainul Yaqin</strong></div>
+            <div>Role: <strong class="text-cyan-400">Software Engineer & AI Engineer</strong></div>
+            <div>Location: Yogyakarta, Indonesia (UTC+7)</div>
+            <div>Specialization: High-performance distributed backends (Rust, Go, TypeScript), web performance rendering, and deterministic applied AI solutions.</div>
+            <div>Leadership: Led 6-developer squad as Tech Lead at Patron Indonesia.</div>
+          </div>
+        `);
+        break;
+
+      case 'projects':
+        appendLog(`
+          <div class="space-y-1 text-slate-300">
+            <div><span class="text-cyan-400 font-bold">[PINNED]</span> <a href="https://github.com/Akin01/pfrsim" target="_blank" class="text-cyan-400 underline font-semibold">pfrsim</a>: Peatland Fire Risk 3D simulator with Deep Learning forecasting in Tauri v2 & Rust.</div>
+            <div><span class="text-cyan-400 font-bold">[PINNED]</span> <a href="https://github.com/Akin01/solid-email" target="_blank" class="text-cyan-400 underline font-semibold">solid-email</a> (16★): Zero-runtime JSX email template engine for SolidJS.</div>
+            <div><span class="text-cyan-400 font-bold">[PINNED]</span> <a href="https://github.com/Akin01/fastrpc" target="_blank" class="text-cyan-400 underline font-semibold">fastrpc</a>: Raw TCP + MessagePack RPC framework for Deno with OpenTelemetry.</div>
+            <div><span class="text-cyan-400 font-bold">[PINNED]</span> <a href="https://github.com/Akin01/deno-redis" target="_blank" class="text-cyan-400 underline font-semibold">deno-redis</a>: Fully-typed Redis client on JSR with low-allocation buffer pipelines.</div>
+            <div><span class="text-emerald-400 font-bold">[PRODUCTION]</span> <a href="https://tanggapi.acehprov.go.id" target="_blank" class="text-cyan-400 underline font-semibold">Tanggapi Aceh</a>: Spatial flood monitoring with 60 FPS WebGL & Web Workers.</div>
+            <div><span class="text-emerald-400 font-bold">[SAAS]</span> <a href="https://petdata.id" target="_blank" class="text-cyan-400 underline font-semibold">Petdata.id</a>: Commercial veterinary clinic management SaaS in Indonesia.</div>
+          </div>
+        `);
+        break;
+
+      case 'skills':
+        appendLog(`
+          <div class="space-y-1 text-slate-300">
+            <div>• <strong class="text-cyan-400">Languages:</strong> Rust (Tokio, Tauri v2, Axum, Actix), TypeScript (Deno, Node, Bun, SolidJS, Nextjs, Astro), Go (Fiber, Chi), Python, Java, SQL</div>
+            <div>• <strong class="text-emerald-400">Systems:</strong> Raw TCP, MessagePack, WebSockets, EXPLAIN Query Optimization, OpenTelemetry, Docker, Kubernetes, Lambda, Cloudrun, Workers</div>
+            <div>• <strong class="text-amber-400">AI & ML:</strong> LLMs, RAG, PyTorch LSTM, GCP MLOps, Probabilistic ML</div>
+            <div>• <strong class="text-indigo-400">Spatial & Edge:</strong> WebGL 60 FPS, MapLibre GL, Web Workers, Cloudflare Edge, AWS</div>
+          </div>
+        `);
+        break;
+
+      case 'specs':
+        appendLog(`
+          <div class="space-y-1 text-slate-300 font-mono">
+            <div>[BENCHMARK] fastrpc median latency: &lt; 1.84ms</div>
+            <div>[BENCHMARK] Tanggapi Aceh rendering: 60 FPS constant under heavy flood polygon compute</div>
+            <div>[BENCHMARK] deno-redis: Zero-allocation buffer pipelines on JSR with connection pooling</div>
+            <div>[BENCHMARK] Database queries: Sub-second execution plans achieved via EXPLAIN tuning</div>
+          </div>
+        `);
+        break;
+
+      case 'contact':
+        appendLog(`
+          <div class="space-y-1 text-slate-300">
+            <div>• Email: <span class="text-cyan-400 font-bold">akinpasha82@gmail.com</span></div>
+            <div>• Phone / WhatsApp: <span class="text-emerald-400 font-bold">+62 819 1797 3875</span></div>
+            <div>• GitHub: <a href="https://github.com/Akin01" target="_blank" class="text-cyan-400 underline">https://github.com/Akin01</a></div>
+            <div>• LinkedIn: <a href="https://linkedin.com/in/ainulyaqin1" target="_blank" class="text-cyan-400 underline">https://linkedin.com/in/ainulyaqin1</a></div>
+            <div class="pt-1 text-emerald-400 text-[10px]">Navigating to // CONTACT section below...</div>
+          </div>
+        `);
+        const contactEl = document.getElementById('contact');
+        if (contactEl) {
+          contactEl.scrollIntoView({ behavior: 'smooth' });
+        }
+        break;
+
+      case 'github':
+        window.open('https://github.com/Akin01', '_blank');
+        appendLog(`<div class="text-emerald-400">Opening https://github.com/Akin01 in new tab...</div>`);
+        break;
+
+      case 'clear':
+        if (output) {
+          output.innerHTML = '';
+        }
+        break;
+
+      default:
+        appendLog(`<div class="text-rose-400">Command not recognized: '${rawCmd}'. Type <span class="underline cursor-pointer cmd-link font-bold" data-cmd="help">help</span> for valid commands.</div>`);
+        break;
+    }
+  }
+
+  if (form && input) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = input.value;
+      input.value = '';
+      handleCommand(val);
+    });
+  }
+
+  if (clearBtn && output) {
+    clearBtn.addEventListener('click', () => {
+      output.innerHTML = '';
+    });
+  }
+
+  // Quick shortcuts click handler
+  document.querySelectorAll('.cmd-shortcut, .cmd-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const cmd = btn.getAttribute('data-cmd');
+      if (cmd) {
+        handleCommand(cmd);
+      }
+    });
+  });
+</script>

@@ -1,0 +1,112 @@
+---
+// src/components/Navbar.astro
+---
+
+<header class="fixed top-0 left-0 w-full z-50 bg-dark-bg/95 border-b border-[#202534] backdrop-blur-sm" id="main-nav">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <!-- Brand / Name -->
+    <a href="#" class="font-mono text-sm font-bold tracking-wider text-slate-100 hover:text-cyan-400 transition-colors">
+      AINUL YAQIN
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-mono text-xs text-slate-400 tracking-wider">
+      <a href="#terminal" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+        <span class="text-cyan-400">01.</span>
+        <span>TERMINAL</span>
+      </a>
+      <a href="#architecture" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+        <span class="text-cyan-400">02.</span>
+        <span>FOCUS</span>
+      </a>
+      <a href="#projects" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+        <span class="text-cyan-400">03.</span>
+        <span>PROJECTS</span>
+      </a>
+      <a href="#experience" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+        <span class="text-cyan-400">04.</span>
+        <span>EXPERIENCE</span>
+      </a>
+      <a href="#skills" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
+        <span class="text-cyan-400">05.</span>
+        <span>STACK</span>
+      </a>
+    </nav>
+
+    <!-- Right Action Items -->
+    <div class="hidden lg:flex items-center gap-3">
+      <a 
+        href="https://github.com/Akin01" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-3 py-1.5 border border-[#2b3245] bg-[#12151f] hover:bg-[#181c2a] hover:border-slate-500 text-xs font-mono text-slate-300 transition-colors"
+      >
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+        </svg>
+        <span>GitHub</span>
+      </a>
+
+      <a 
+        href="https://linkedin.com/in/ainulyaqin1" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-[#2b3245] bg-[#12151f] hover:bg-[#181c2a] hover:border-slate-500 text-xs font-mono text-slate-300 transition-colors"
+      >
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.2a1.66 1.66 0 0 0-1.66 1.66c0 .92.74 1.66 1.66 1.66.92 0 1.66-.74 1.66-1.66 0-.92-.74-1.66-1.66-1.66Z"/>
+        </svg>
+        <span>LinkedIn</span>
+      </a>
+
+      <a 
+        href="#contact"
+        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-cyan-400 hover:bg-cyan-300 text-black font-mono text-xs font-bold transition-colors"
+      >
+        <span>// CONTACT</span>
+      </a>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button 
+      type="button" 
+      id="mobile-menu-btn"
+      class="md:hidden p-2 border border-[#2b3245] text-slate-300 hover:text-cyan-400 font-mono"
+      aria-label="Toggle Navigation"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden border-b border-[#202534] bg-dark-bg px-4 py-4 font-mono text-xs space-y-3">
+    <a href="#terminal" class="block text-slate-300 hover:text-cyan-400 py-1">01. // TERMINAL</a>
+    <a href="#architecture" class="block text-slate-300 hover:text-cyan-400 py-1">02. // FOCUS</a>
+    <a href="#projects" class="block text-slate-300 hover:text-cyan-400 py-1">03. // PROJECTS</a>
+    <a href="#experience" class="block text-slate-300 hover:text-cyan-400 py-1">04. // EXPERIENCE</a>
+    <a href="#skills" class="block text-slate-300 hover:text-cyan-400 py-1">05. // STACK</a>
+    <a href="#contact" class="block text-slate-300 hover:text-cyan-400 py-1">06. // CONTACT</a>
+    <div class="pt-3 border-t border-[#202534] flex items-center gap-4">
+      <a href="https://github.com/Akin01" target="_blank" class="text-xs text-slate-400 hover:text-cyan-400">GitHub</a>
+      <span class="text-slate-600">|</span>
+      <a href="https://linkedin.com/in/ainulyaqin1" target="_blank" class="text-xs text-slate-400 hover:text-cyan-400">LinkedIn</a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+    menu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menu.classList.add('hidden');
+      });
+    });
+  }
+</script>

@@ -1,0 +1,368 @@
+---
+// src/components/Hero.astro
+---
+
+<section class="relative py-20 sm:py-24 tech-grid border-b border-[#202534]" id="hero">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+    
+    <!-- Main Row: Left Portrait (no box container), Right Caption (Typewriting) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      
+      <!-- Left Column: Portrait directly on page layout (5 cols) -->
+      <div class="lg:col-span-5 flex flex-col items-center lg:items-start justify-center hero-portrait">
+        <canvas 
+          id="ascii-akin" 
+          role="img" 
+          aria-label="Ainul Yaqin ASCII Portrait"
+          style="width: 100%; max-width: 480px; display: block;"
+        ></canvas>
+      </div>
+
+      <!-- Right Column: Caption with Typewriting Animation (7 cols) -->
+      <div class="lg:col-span-7 space-y-5 hero-caption">
+        <div class="font-mono text-xs text-cyan-400 tracking-widest font-semibold uppercase">
+          // PROFILE
+        </div>
+
+        <!-- Headline with Role Cipher Shuffle -->
+        <div class="space-y-2">
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-sans">
+            I'm <span class="text-white">Ainul Yaqin</span>
+          </h1>
+          <div class="font-mono text-xl sm:text-2xl lg:text-3xl text-cyan-400 font-bold flex items-center gap-2 tracking-wide min-h-9 sm:min-h-11">
+            <span class="text-slate-500 font-mono select-none">&gt;</span>
+            <span id="role-shuffle" class="text-cyan-400 font-mono">Software Engineer</span>
+            <span class="inline-block w-2 sm:w-2.5 h-5 sm:h-6 bg-cyan-400 animate-pulse"></span>
+          </div>
+        </div>
+
+        <!-- Typewriter Container for Specialization -->
+        <div class="min-h-18.75 sm:min-h-16.25 flex items-start">
+          <p class="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed font-sans" id="typewriter-target">
+            Specializing in low-latency distributed backends, web performance rendering, real-time spatial analytics, and production-grade generative AI pipelines.<span class="inline-block text-cyan-400 font-mono ml-0.5 animate-pulse">█</span>
+          </p>
+        </div>
+        <div class="font-mono text-xs text-slate-400 flex flex-wrap items-center gap-3 pt-3 border-t border-[#202534]">
+          <span>LOCATION: YOGYAKARTA, ID (UTC+7)</span>
+          <span class="text-slate-700">•</span>
+          <span class="text-cyan-400">CORE: RUST / GO / TYPESCRIPT / PYTHON / JAVA / AI</span>
+        </div>
+
+        <!-- Flat Action Buttons -->
+        <div class="hero-actions flex flex-wrap items-center gap-3 pt-2">
+          <a 
+            href="#projects" 
+            class="inline-flex items-center gap-2 px-5 py-2.5 bg-cyan-400 hover:bg-cyan-300 text-black font-mono text-xs font-bold transition-colors"
+          >
+            <span>PROJECTS</span>
+            <span class="text-black">&rarr;</span>
+          </a>
+
+
+          <a 
+            href="https://github.com/Akin01" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2.5 bg-[#0e111a] hover:bg-[#151926] text-slate-400 hover:text-white border border-[#222738] font-mono text-xs transition-colors"
+          >
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+            </svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</section>
+
+<!-- Text Shuffle Cipher Animation Script -->
+<script is:inline>
+  // 1. Typewriter Animation for Specialization Narrative
+  (function() {
+    const target = document.getElementById("typewriter-target");
+    if (!target) return;
+
+    const fullText = "Specializing in low-latency distributed backends, web performance rendering, real-time spatial analytics, and production-grade generative AI pipelines.";
+    let charIndex = 0;
+
+    target.innerHTML = '<span class="inline-block text-cyan-400 font-mono ml-0.5 animate-pulse">█</span>';
+
+    function typeChar() {
+      if (charIndex < fullText.length) {
+        target.innerHTML = fullText.slice(0, charIndex + 1) + '<span class="inline-block text-cyan-400 font-mono ml-0.5 animate-pulse">█</span>';
+        charIndex++;
+        setTimeout(typeChar, 16);
+      } else {
+        target.innerHTML = fullText + '<span class="inline-block text-cyan-400 font-mono ml-0.5 animate-pulse">█</span>';
+      }
+    }
+
+    setTimeout(typeChar, 200);
+  })();
+
+  // 2. Text Shuffle Cipher Animation for Headline Roles
+  (function() {
+    const el = document.getElementById("role-shuffle");
+    if (!el) return;
+
+    class TextScramble {
+      constructor(targetEl) {
+        this.el = targetEl;
+        this.chars = '!<>-_\\/[]{}—=+*^?#________0101';
+        this.update = this.update.bind(this);
+      }
+
+      setText(newText) {
+        const oldText = this.el.innerText;
+        const length = Math.max(oldText.length, newText.length);
+        const promise = new Promise((resolve) => this.resolve = resolve);
+        this.queue = [];
+        for (let i = 0; i < length; i++) {
+          const from = oldText[i] || '';
+          const to = newText[i] || '';
+          const start = Math.floor(Math.random() * 12);
+          const end = start + Math.floor(Math.random() * 14);
+          this.queue.push({ from, to, start, end });
+        }
+        cancelAnimationFrame(this.frameReq);
+        this.frame = 0;
+        this.update();
+        return promise;
+      }
+
+      update() {
+        let output = '';
+        let complete = 0;
+        for (let i = 0, n = this.queue.length; i < n; i++) {
+          let { from, to, start, end, char } = this.queue[i];
+          if (this.frame >= end) {
+            complete++;
+            output += to;
+          } else if (this.frame >= start) {
+            if (!char || Math.random() < 0.28) {
+              char = this.chars[Math.floor(Math.random() * this.chars.length)];
+              this.queue[i].char = char;
+            }
+            output += '<span class="text-cyan-200 opacity-75">' + char + '</span>';
+          } else {
+            output += from;
+          }
+        }
+        this.el.innerHTML = output;
+        if (complete === this.queue.length) {
+          this.resolve();
+        } else {
+          this.frameReq = requestAnimationFrame(this.update);
+          this.frame++;
+        }
+      }
+    }
+
+    const phrases = [
+      "Software Engineer",
+      "AI Engineer",
+      "Software Chef"
+    ];
+
+    const scrambler = new TextScramble(el);
+    let counter = 0;
+
+    function next() {
+      counter = (counter + 1) % phrases.length;
+      scrambler.setText(phrases[counter]).then(() => {
+        setTimeout(next, 2800);
+      });
+    }
+
+    // Start cycling after initial display
+    setTimeout(next, 2800);
+  })();
+</script>
+
+<!-- ASCII Canvas Mount Script -->
+<script is:inline type="module">
+import { mount } from "/mount.js";
+
+// akin portrait, drawn in ascii on https://ascii.rest/make/
+const meta = {
+  name: "akin portrait",
+  category: "companies",
+  note: "the akin portrait logo, glinting now and then",
+  cols: 64,
+  rows: 32,
+  fps: 30,
+  options: { shine: 5 },
+  // The logo's 8 colours for a light page, then for a dark one; each as drawn, then twice lighter for the glint.
+  palette: [
+    "#131718", "#f9edd4", "#627030", "#3b3e2b", "#d5beaa", "#9eb054",
+    "#87715a", "#ad9b8a", "#666869", "#fbf3e3", "#99a278", "#808275",
+    "#e4d5c8", "#c0cc90", "#b1a394", "#cabeb3", "#b8b9ba", "#fdfaf2",
+    "#d0d4c1", "#c4c5bf", "#f2ece6", "#e2e7cc", "#dbd4ce", "#e6e1dc",
+    "#e8ebef", "#f9edd4", "#627030", "#e8ebef", "#d5beaa", "#9eb054",
+    "#87715a", "#ad9b8a", "#f0f2f5", "#fbf3e3", "#99a278", "#f0f2f5",
+    "#e4d5c8", "#c0cc90", "#b1a394", "#cabeb3", "#f8f9fa", "#fdfaf2",
+    "#d0d4c1", "#f8f9fa", "#f2ece6", "#e2e7cc", "#dbd4ce", "#e6e1dc",
+  ],
+};
+
+// In a <pre>, in the page's own colour.
+const MONO = String.raw`
+
+  ::::+##+#@@##-=*+*=++-::-:::::++=--:=+++========+===+*+=**++
+  .:::=*#+@@@#*-=+#@%%@#==-:-::=+-------========--*+**+++=***+
+  ..::=+##@@@*#:=%%%*%@#=+=++==+*====--==-======--=====++==+==
+  ::::-+%%@@#**:+#@%++==:::.::---=+=-==----:-====++++=+=*+===+
+  :::---##@@%**:=%%%#=::::::..:::.:-+=--=--::::.:-+=++*+*+=-==
+  :::---##@@@*+:#@@@+......:-===-:...=:-=-::::-:==-=++**+++*-:
+  ::::-=*#@@@%%-#@@+...:=+*#%%@@@@*-..:::---:::.::--=====++#==
+  :::--=*#@@@@%-+**:...==++*#%@@@@@@-...:--::::::.+-=+==-::-::
+  ::::-=#%%*%%#%%#:...:=+**###%%@%@@#:..:--:.::::-==+==:::::=-
+  ::::-#@#++###%%*....-====+***=-=*#%#:..-:::.....:::::::::..+
+  .::-#++*#+#%@@%%-...==---==#%*++%@@@=:-=-:::....::::::.:...-
+  :+*#*=+##+%@%%%%%-..++++**+#@@@%@@@@+-=++*++:..:::::::::...:
+  @@@*:+=++#########:.=+*##+++**%*#%@%*:-=+***#%*+=:::::::::.:
+  @*++:+++######%%%%#=-+***=--=+#*+#%%=---+*=-=#*#%*=::::::.:.
+  ::+-=+*##%%%%%%%%%@%*+++---=*#%%#*##-=--+*--:.-*####*+-::...
+  :-+-=++%%%%%@@%%%%%%##+=+++++*#%%***-=--+*--:.-##+####%%*=--
+  :=+.=@@@@@@@@@@@@@@%##*---=+++**++*#==--=*=:..-%#::-+######%
+  =+=.-####%%%%%%%%%%#++=-------==+##%@%=-=+===:-#%...::-+*#+#
+  ==-:***###*#####*+:.-=-=====++**###%@@-----=+++#@-.:.:::.:+*
+  .=-=+++***+==-:......:=+++++***##%%@*-:---------=-:....:..**
+  =+=++++-:...............:-=**###*+-:::::::::::::----:.....*#
+  ####*:.........................::.:::::::::::::::::--:....*%
+  ***=................................::::::::.:.:.::::-:...*#
+  @@#.................................::::::::::....:::::--=*#
+  @%....................................::::::--:...::::::::*#
+  @=.....................................:::::::--...::::::.*%
+  %.......................................:::::::::...:::::.+#
+  =........................................::::::......::::.+#
+  .........................................::::::.......:::-+*
+  ..........................................:::::........:::=#
+
+`;
+
+// On a canvas, and the colour of each cell: an index into the logo's colours.
+const ART = String.raw`
+
+  ::::+##+#@@##-=*+*=++-::-:::::++=--:=+++========+===+*+=**++
+  .:::=*#+@@@#*-=+#@%%@#==-:-::=+-------========--*+**+++=***+
+  ..::=+##@@@*#:=%%%*%@#=+=++==+*====--==-======--=====++==+==
+  ::::-+%%@@#**:+#@%++==:::.::---=+=-==----:-====++++=+=*+===+
+  :::---##@@%**:=%%%#=::::::..:::.:-+=--=--::::.:-+=++*+*+=-==
+  :::---##@@@*+:#@@@+......:-===-:...=:-=-::::-:==-=++**+++*-:
+  ::::-=*#@@@%%-#@@+...:=+*#%%@@@@*-..:::---:::.::--=====++#==
+  :::--=*#@@@@%-+**:...==++*#%@@@@@@-...:--::::::.+-=+==-::-::
+  ::::-=#%%*%%#%%#:...:=+**###%%@%@@#:..:--:.::::-==+==:::::=-
+  ::::-#@#++###%%*....-====+***=-=*#%#:..-:::.....:::::::::..+
+  .::-#++*#+#%@@%%-...==---==#%*++%@@@=:-=-:::....::::::.:...-
+  :+*#*=+##+%@%%%%%-..++++**+#@@@%@@@@+-=++*++:..:::::::::...:
+  @@@*:+=++#########:.=+*##+++**%*#%@%*:-=+***#%*+=:::::::::.:
+  @*++:+++######%%%%#=-+***=--=+#*+#%%=---+*=-=#*#%*=::::::.:.
+  ::+-=+*##%%%%%%%%%@%*+++---=*#%%#*##-=--+*--:.-*####*+-::...
+  :-+-=++%%%%%@@%%%%%%##+=+++++*#%%***-=--+*--:.-##+####%%*=--
+  :=+.=@@@@@@@@@@@@@@%##*---=+++**++*#==--=*=:..-%#::-+######%
+  =+=.-####%%%%%%%%%%#++=-------==+##%@%=-=+===:-#%...::-+*#+#
+  ==-:***###*#####*+:.-=-=====++**###%@@-----=+++#@-.:.:::.:+*
+  .=-=+++***+==-:......:=+++++***##%%@*-:---------=-:....:..**
+  =+=++++-:...............:-=**###*+-:::::::::::::----:.....*#
+  ####*:.........................::.:::::::::::::::::--:....*%
+  ***=................................::::::::.:.:.::::-:...*#
+  @@#.................................::::::::::....:::::--=*#
+  @%....................................::::::--:...::::::::*#
+  @=.....................................:::::::--...::::::.*%
+  %.......................................:::::::::...:::::.+#
+  =........................................::::::......::::.+#
+  .........................................::::::.......:::-+*
+  ..........................................:::::........:::=#
+
+`;
+const INK = String.raw`
+
+  033327526115533665323333330033223333222222232223233252233522
+  003327521112233644444723333333233333232232223333525222235552
+  000337551115533444444726676336736323333322323233223222233223
+  000332551176533411230330000003336333633333333222222222223322
+  300333551172503744730000000000000363332333030002222253533322
+  033333551112331111000000000000000006033333033333322255222333
+  033332551111731116000066774441111000003333333000332223322133
+  033333551114706770000366677441111100003333000000232222330300
+  030332144644744430003666777744111140003330000033222330033030
+  000331113677444700003666666776367444000330000000333300030003
+  000342667614444400002633666716664111300330000000033300000003
+  001772667644444440006666676411444114437667400000003333300003
+  111736266777777777006677767763477444433326667100030033330300
+  136706337777777777770667763366776744333367336777110003300000
+  006066347777777777777666333667447777330367333007777740030000
+  006367774444444444477766666667444767330377333007777777774000
+  066034441114111111177773336666676677360377330004400077777777
+  066007777777777477477733333333266774413336300004400033377767
+  032077777777777777002232666666677774413333333337100000000067
+  063366666677700000000066666667777444103333333333330000000077
+  036666660000000000000000066774444000033333333333333300000077
+  777770000000000000000000000000000000003333300330033333000044
+  677700000000000000000000000000000000000033330003003333000044
+  411000000000000000000000000000000000000003333000003000300077
+  110000000000000000000000000000000000000003333330003000030077
+  100000000000000000000000000000000000000000033333000000000077
+  100000000000000000000000000000000000000000033003300000000077
+  000000000000000000000000000000000000000000000000000000033077
+  000000000000000000000000000000000000000000000000000000033377
+  000000000000000000000000000000000000000000000000000000033367
+
+`;
+
+// Light to dense. In one ink on a light page it is turned round, as dense reads as dark there.
+const RAMP = ".:-=+*#%@";
+
+const START = 0.5; // seconds before the first glint
+const PASS = 2; // seconds a glint takes to cross
+const HALF = 5; // half its width, in cells
+const LEAN = 0.9; // cells it shifts left a row down, so it leans like a slash
+const SOLID = "-=+*#%@"; // what the glint turns to slashes; the lightest shades keep theirs
+
+const lines = (art) => art.slice(1, -1).split("\n").map((line) => line.padEnd(meta.cols));
+
+function akinPortrait({ shine = meta.options.shine } = {}) {
+  const { cols, rows } = meta;
+  const mono = lines(MONO), art = lines(ART), ink = lines(INK);
+  const n = meta.palette.length / 6;
+  const every = shine > 0 ? Math.max(shine, PASS + 0.5) : 0;
+  // The glint crosses the logo's ink, edge to edge, rather than the whole frame.
+  let lo = Infinity, hi = -Infinity;
+  for (const pic of [mono, art])
+    pic.forEach((line, y) => {
+      for (let x = 0; x < cols; x++) if (line[x] !== " ") (lo = Math.min(lo, x + LEAN * y)), (hi = Math.max(hi, x + LEAN * y));
+    });
+  const span = hi - lo + 2 * HALF;
+
+  return (t, { paper = false, color } = {}) => {
+    const pic = color ? art : mono;
+    const since = t - START;
+    const at = every && since >= 0 ? lo - HALF + (span * (since % every)) / PASS : -Infinity;
+    const out = [];
+    for (let y = 0; y < rows; y++) {
+      let line = "";
+      for (let x = 0; x < cols; x++) {
+        let ch = pic[y][x];
+        if (ch !== " ") {
+          if (paper && !color) ch = RAMP[RAMP.length - 1 - RAMP.indexOf(ch)];
+          const d = Math.abs(x + LEAN * y - at);
+          let k = d < HALF ? 1 - d / HALF : 0;
+          k = k * k * (3 - 2 * k);
+          if (k > 0.55 && SOLID.includes(ch)) ch = "/";
+          if (color) color[y * cols + x] = (paper ? 0 : 3 * n) + (k > 0.6 ? 2 : k > 0.25 ? 1 : 0) * n + parseInt(ink[y][x], 36);
+        }
+        line += ch;
+      }
+      out.push(line);
+    }
+    return out.join("\n");
+  };
+}
+
+mount(document.getElementById("ascii-akin"), { meta, default: akinPortrait });
+</script>
