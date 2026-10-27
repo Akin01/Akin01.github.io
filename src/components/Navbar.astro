@@ -5,31 +5,41 @@
 <header class="fixed top-0 left-0 w-full z-50 bg-dark-bg/95 border-b border-[#202534] backdrop-blur-sm" id="main-nav">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
     <!-- Brand / Name -->
-    <a href="#" class="font-mono text-sm font-bold tracking-wider text-slate-100 hover:text-cyan-400 transition-colors">
+    <a 
+      href="#hero" 
+      id="brand-link" 
+      class="font-mono text-sm font-bold tracking-wider text-slate-100 hover:text-cyan-400 transition-colors cursor-pointer select-none"
+      title="Ainul Yaqin - Back to top"
+    >
       AINUL YAQIN
     </a>
 
     <!-- Desktop Navigation Links -->
     <nav class="hidden md:flex items-center gap-6 lg:gap-8 font-mono text-xs text-slate-400 tracking-wider">
-      <a href="#terminal" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
-        <span class="text-cyan-400">01.</span>
-        <span>TERMINAL</span>
+      <a href="#terminal" class="nav-link relative py-1 hover:text-cyan-400 transition-colors flex items-center gap-1.5" data-nav="terminal">
+        <span class="nav-num text-cyan-400 transition-colors">01.</span>
+        <span class="nav-text transition-colors">TERMINAL</span>
+        <span class="nav-indicator absolute -bottom-[23px] left-0 right-0 h-[2px] bg-cyan-400 scale-x-0 transition-transform duration-200 origin-left"></span>
       </a>
-      <a href="#architecture" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
-        <span class="text-cyan-400">02.</span>
-        <span>FOCUS</span>
+      <a href="#architecture" class="nav-link relative py-1 hover:text-cyan-400 transition-colors flex items-center gap-1.5" data-nav="architecture">
+        <span class="nav-num text-cyan-400 transition-colors">02.</span>
+        <span class="nav-text transition-colors">FOCUS</span>
+        <span class="nav-indicator absolute -bottom-[23px] left-0 right-0 h-[2px] bg-cyan-400 scale-x-0 transition-transform duration-200 origin-left"></span>
       </a>
-      <a href="#projects" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
-        <span class="text-cyan-400">03.</span>
-        <span>PROJECTS</span>
+      <a href="#projects" class="nav-link relative py-1 hover:text-cyan-400 transition-colors flex items-center gap-1.5" data-nav="projects">
+        <span class="nav-num text-cyan-400 transition-colors">03.</span>
+        <span class="nav-text transition-colors">PROJECTS</span>
+        <span class="nav-indicator absolute -bottom-[23px] left-0 right-0 h-[2px] bg-cyan-400 scale-x-0 transition-transform duration-200 origin-left"></span>
       </a>
-      <a href="#experience" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
-        <span class="text-cyan-400">04.</span>
-        <span>EXPERIENCE</span>
+      <a href="#experience" class="nav-link relative py-1 hover:text-cyan-400 transition-colors flex items-center gap-1.5" data-nav="experience">
+        <span class="nav-num text-cyan-400 transition-colors">04.</span>
+        <span class="nav-text transition-colors">EXPERIENCE</span>
+        <span class="nav-indicator absolute -bottom-[23px] left-0 right-0 h-[2px] bg-cyan-400 scale-x-0 transition-transform duration-200 origin-left"></span>
       </a>
-      <a href="#skills" class="hover:text-cyan-400 transition-colors flex items-center gap-1.5">
-        <span class="text-cyan-400">05.</span>
-        <span>STACK</span>
+      <a href="#skills" class="nav-link relative py-1 hover:text-cyan-400 transition-colors flex items-center gap-1.5" data-nav="skills">
+        <span class="nav-num text-cyan-400 transition-colors">05.</span>
+        <span class="nav-text transition-colors">STACK</span>
+        <span class="nav-indicator absolute -bottom-[23px] left-0 right-0 h-[2px] bg-cyan-400 scale-x-0 transition-transform duration-200 origin-left"></span>
       </a>
     </nav>
 
@@ -61,7 +71,9 @@
 
       <a 
         href="#contact"
-        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-cyan-400 hover:bg-cyan-300 text-black font-mono text-xs font-bold transition-colors"
+        id="nav-contact-btn"
+        data-nav="contact"
+        class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-cyan-400 hover:bg-cyan-300 text-black font-mono text-xs font-bold transition-all border border-cyan-400"
       >
         <span>// CONTACT</span>
       </a>
@@ -81,13 +93,13 @@
   </div>
 
   <!-- Mobile Dropdown -->
-  <div id="mobile-menu" class="hidden md:hidden border-b border-[#202534] bg-dark-bg px-4 py-4 font-mono text-xs space-y-3">
-    <a href="#terminal" class="block text-slate-300 hover:text-cyan-400 py-1">01. // TERMINAL</a>
-    <a href="#architecture" class="block text-slate-300 hover:text-cyan-400 py-1">02. // FOCUS</a>
-    <a href="#projects" class="block text-slate-300 hover:text-cyan-400 py-1">03. // PROJECTS</a>
-    <a href="#experience" class="block text-slate-300 hover:text-cyan-400 py-1">04. // EXPERIENCE</a>
-    <a href="#skills" class="block text-slate-300 hover:text-cyan-400 py-1">05. // STACK</a>
-    <a href="#contact" class="block text-slate-300 hover:text-cyan-400 py-1">06. // CONTACT</a>
+  <div id="mobile-menu" class="hidden md:hidden border-b border-[#202534] bg-dark-bg px-4 py-4 font-mono text-xs space-y-2">
+    <a href="#terminal" class="mobile-nav-link block text-slate-300 hover:text-cyan-400 py-1.5 px-2 rounded-xs transition-colors" data-nav="terminal">01. // TERMINAL</a>
+    <a href="#architecture" class="mobile-nav-link block text-slate-300 hover:text-cyan-400 py-1.5 px-2 rounded-xs transition-colors" data-nav="architecture">02. // FOCUS</a>
+    <a href="#projects" class="mobile-nav-link block text-slate-300 hover:text-cyan-400 py-1.5 px-2 rounded-xs transition-colors" data-nav="projects">03. // PROJECTS</a>
+    <a href="#experience" class="mobile-nav-link block text-slate-300 hover:text-cyan-400 py-1.5 px-2 rounded-xs transition-colors" data-nav="experience">04. // EXPERIENCE</a>
+    <a href="#skills" class="mobile-nav-link block text-slate-300 hover:text-cyan-400 py-1.5 px-2 rounded-xs transition-colors" data-nav="skills">05. // STACK</a>
+    <a href="#contact" class="mobile-nav-link block text-slate-300 hover:text-cyan-400 py-1.5 px-2 rounded-xs transition-colors" data-nav="contact">06. // CONTACT</a>
     <div class="pt-3 border-t border-[#202534] flex items-center gap-4">
       <a href="https://github.com/Akin01" target="_blank" class="text-xs text-slate-400 hover:text-cyan-400">GitHub</a>
       <span class="text-slate-600">|</span>
@@ -97,16 +109,131 @@
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  if (btn && menu) {
-    btn.addEventListener('click', () => {
-      menu.classList.toggle('hidden');
-    });
-    menu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        menu.classList.add('hidden');
+  (function() {
+    // Mobile menu toggle
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
       });
-    });
-  }
+      menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          menu.classList.add('hidden');
+        });
+      });
+    }
+    // Smooth scroll to top on brand click
+    const brand = document.getElementById('brand-link');
+    if (brand) {
+      brand.addEventListener('click', (e) => {
+        e.preventDefault();
+        const lenis = (window as any).__lenis;
+        if (lenis && typeof lenis.scrollTo === 'function') {
+          lenis.scrollTo(0, { duration: 1.15 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+
+    // Dynamic scroll spy: Follow active section
+    const navItems = document.querySelectorAll('[data-nav]');
+    const sectionIds = ['terminal', 'architecture', 'projects', 'experience', 'skills', 'contact'];
+
+    function updateActiveNav() {
+      const scrollY = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight;
+      const innerHeight = window.innerHeight;
+
+      // Bottom reached -> activate contact
+      if (scrollY + innerHeight >= scrollHeight - 75) {
+        applyActive('contact');
+        return;
+      }
+
+      // In Hero (top of page) -> no section active
+      if (scrollY < 260) {
+        applyActive(null);
+        return;
+      }
+
+      let activeSectionId = null;
+      const navOffset = 180; // Assessment line below navbar
+
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= navOffset && rect.bottom > navOffset) {
+          activeSectionId = id;
+          break;
+        }
+      }
+
+      // Gap fallback between sections: pick latest passed section
+      if (!activeSectionId) {
+        for (let i = sectionIds.length - 1; i >= 0; i--) {
+          const el = document.getElementById(sectionIds[i]);
+          if (el && el.getBoundingClientRect().top <= navOffset) {
+            activeSectionId = sectionIds[i];
+            break;
+          }
+        }
+      }
+
+      applyActive(activeSectionId);
+    }
+
+    function applyActive(activeId) {
+      navItems.forEach(item => {
+        const navTarget = item.getAttribute('data-nav');
+        if (activeId && navTarget === activeId) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+
+    // Scroll listener throttled by requestAnimationFrame
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveNav();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Initial check on load
+    updateActiveNav();
+  })();
 </script>
+
+<style>
+  .nav-link.active .nav-text {
+    color: #ffffff;
+    font-weight: 700;
+  }
+  .nav-link.active .nav-num {
+    color: #22d3ee;
+    text-shadow: 0 0 10px rgba(34, 211, 238, 0.5);
+  }
+  .nav-link.active .nav-indicator {
+    transform: scaleX(1);
+  }
+  #nav-contact-btn.active {
+    background-color: #22d3ee;
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+    border-color: #ffffff;
+  }
+  .mobile-nav-link.active {
+    color: #22d3ee;
+    font-weight: 700;
+    background-color: #121824;
+    border-left: 2px solid #22d3ee;
+  }
+</style>

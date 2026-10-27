@@ -18,6 +18,8 @@
     touchMultiplier: 1.5,
   });
 
+  (window as any).__lenis = lenis;
+
   // 2. Synchronize Lenis with GSAP ScrollTrigger
   lenis.on('scroll', ScrollTrigger.update);
 
@@ -31,6 +33,11 @@
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
       const href = anchor.getAttribute('href');
+      if (href === '#' || href === '#hero') {
+        e.preventDefault();
+        lenis.scrollTo(0, { duration: 1.15 });
+        return;
+      }
       if (href && href.startsWith('#') && href.length > 1) {
         const target = document.querySelector(href);
         if (target) {
