@@ -23,14 +23,14 @@ Personal engineering portfolio and technical project catalog for **Ainul Yaqin**
 
 ## 🛠️ Tech Stack
 
-| Layer | Technologies |
-| :--- | :--- |
-| **Framework** | [Astro](https://astro.build) (Zero-JS static HTML by default) |
-| **Styling** | [Tailwind CSS v4](https://tailwindcss.com) (Dark industrial engineering aesthetic) |
-| **Animations** | [GSAP](https://greensock.com) (ScrollTrigger, physical gestures, cipher text scrambler) |
-| **Smooth Scroll**| [Lenis](https://lenis.dev) (Hardware-accelerated inertia scroll engine) |
-| **Typography** | JetBrains Mono, Fira Code, Plus Jakarta Sans |
-| **Deployment** | GitHub Actions &rarr; GitHub Pages ([akin01.github.io](https://akin01.github.io)) |
+| Layer             | Technologies                                                                            |
+| :---------------- | :-------------------------------------------------------------------------------------- |
+| **Framework**     | [Astro](https://astro.build) (Zero-JS static HTML by default)                           |
+| **Styling**       | [Tailwind CSS v4](https://tailwindcss.com) (Dark industrial engineering aesthetic)      |
+| **Animations**    | [GSAP](https://greensock.com) (ScrollTrigger, physical gestures, cipher text scrambler) |
+| **Smooth Scroll** | [Lenis](https://lenis.dev) (Hardware-accelerated inertia scroll engine)                 |
+| **Typography**    | JetBrains Mono, Fira Code, Plus Jakarta Sans                                            |
+| **Deployment**    | GitHub Actions &rarr; GitHub Pages ([akin01.github.io](https://akin01.github.io))       |
 
 ---
 
