@@ -207,11 +207,11 @@ const experiences: Role[] = [
   }
 
   .station-card-left {
-    transform: translateX(-40px) scale(0.96);
+    transform: translateX(-40px) rotate(-2.5deg) scale(0.96);
   }
 
   .station-card-right {
-    transform: translateX(40px) scale(0.96);
+    transform: translateX(40px) rotate(2.5deg) scale(0.96);
   }
 
   /* Initial hidden state for station nodes */
@@ -222,11 +222,24 @@ const experiences: Role[] = [
   }
 
   /* Active connected state when line connects to station */
-  .route-station.card-connected .station-card {
+  .route-station.card-connected .station-card-left {
     opacity: 1 !important;
-    transform: translate(0, 0) scale(1) !important;
+    transform: translate(0, 0) rotate(-1.2deg) scale(1) !important;
     pointer-events: auto !important;
     border-color: #384566 !important;
+  }
+
+  .route-station.card-connected .station-card-right {
+    opacity: 1 !important;
+    transform: translate(0, 0) rotate(1.2deg) scale(1) !important;
+    pointer-events: auto !important;
+    border-color: #384566 !important;
+  }
+
+  .route-station.card-connected .station-card:hover {
+    transform: translate(0, -3px) rotate(0deg) scale(1.01) !important;
+    border-color: #00e5ff !important;
+    box-shadow: 0 16px 36px -10px rgba(0, 229, 255, 0.15) !important;
   }
 
   .route-station-node.node-connected {
