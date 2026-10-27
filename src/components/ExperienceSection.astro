@@ -2,92 +2,100 @@
 // src/components/ExperienceSection.astro
 
 interface Role {
-  period: string;
   role: string;
   company: string;
-  location: string;
   city: string;
+  period: string;
   highlights: string[];
   techStack: string[];
 }
 
 const experiences: Role[] = [
   {
-    period: "Sep 2023 — Feb 2025",
+    role: "AI Engineer (Freelance)",
+    company: "RIMM Sustainability",
+    city: "SINGAPORE",
+    period: "Jul 2024 — Jul 2025",
+    highlights: [
+      "Developed LLM-powered internal tools to support team tasks, including automated documentation and report generation fulfilling client standards.",
+      "Designed deployment strategy for end-to-end data generation and model inference pipelines utilizing GCP cloud services.",
+      "Conducted automated validation checks and quality benchmarking suites, dramatically reducing manual audit turnaround times."
+    ],
+    techStack: ["LLM Pipelines", "GCP", "Prompt Engineering", "Output Validation", "Python", "Data Verification"]
+  },
+  {
     role: "Tech Lead",
     company: "Patron Indonesia",
-    location: "Remote (Jakarta)",
     city: "JAKARTA",
+    period: "Sep 2023 — Feb 2025",
     highlights: [
-      "Led a 6-developer engineering team designing and shipping an integrated data analytics platform for executive decision-makers.",
-      "Architected scalable, cost-effective distributed system architectures, boosting API throughput under heavy query spikes.",
+      "Architected scalable, cost-effective system architectures that optimized performance and reliably met expanding user demand.",
+      "Led an engineering team of 6 developers in designing and delivering an integrated data analytics dashboard for executive decision-makers.",
       "Optimized database query execution schemas and distributed Redis caching pipelines to achieve sub-second dashboard rendering.",
       "Instituted rigorous CI/CD automation, pull request standards, and architectural reviews to accelerate deployment velocity."
     ],
     techStack: ["Distributed Systems", "Redis", "Team Leadership", "Data Pipelines", "CI/CD", "Node.js", "MySQL"]
   },
   {
-    period: "Project-based",
-    role: "Tech Lead (Software Architect)",
+    role: "Tech Lead",
     company: "Insightful Data Indonesia",
-    location: "Remote (Aceh)",
     city: "ACEH",
+    period: "Project-based",
     highlights: [
-      "Led fullstack and spatial engineering for Aceh Province's real-time flood monitoring and disaster coordination platform (Tanggapi Aceh).",
-      "Engineered optimistic data rendering using MapLibre GL, offloading heavy topological computations to Web Workers and rendering via WebGL at continuous 60 FPS.",
-      "Architected resilient real-time communication protocols coordinating emergency alerts between affected citizens and regional disaster authorities."
+      "Led the engineering team in developing a high-performance spatial analytics dashboard to deliver real-time flood monitoring for Aceh Province (Tanggapi Aceh).",
+      "Connected affected citizens, disaster relief decision-makers, and humanitarian organizations to coordinate emergency response.",
+      "Engineered optimistic data rendering using MapLibre GL, offloading heavy topological computations to Web Workers and rendering via WebGL at continuous 60 FPS."
     ],
     techStack: ["MapLibre GL", "WebGL", "Web Workers", "Spatial Analytics", "WebSockets", "Fullstack Architecture"]
   },
   {
-    period: "Jul 2024 — Jul 2025",
-    role: "AI Engineer (Freelance)",
-    company: "RIMM Sustainability",
-    location: "Remote (Singapore)",
-    city: "SINGAPORE",
-    highlights: [
-      "Developed LLM-powered internal automation and prompt workflows to generate client-compliant ESG & sustainability reports automatically.",
-      "Architected end-to-end data ingestion and model inference pipelines on Google Cloud Platform (GCP) ensuring strictly structured, validated JSON outputs.",
-      "Designed and executed automated validation checks and quality benchmarking suites, dramatically reducing manual audit turnaround times."
-    ],
-    techStack: ["LLM Pipelines", "GCP", "Prompt Engineering", "Output Validation", "Python", "Data Verification"]
-  },
-  {
-    period: "Oct 2022 — Sep 2023",
     role: "Backend Engineer",
     company: "KMPlus Consultant",
-    location: "Remote (Jakarta)",
     city: "JAKARTA",
+    period: "Oct 2022 — Sep 2023",
     highlights: [
-      "Engineered scalable RESTful API solutions for Portaverse Pelindo KMS platform, streamlining data processing workflows.",
-      "Substantially reduced MySQL query times by conducting deep query execution plan analysis (EXPLAIN) and strategic compound indexing.",
-      "Eliminated algorithmic latency bottlenecks in randomized assessment assignments using tailored in-memory data structures."
+      "Engineered scalable API solutions that streamlined data processing workflows, significantly enhancing system responsiveness and operational efficiency.",
+      "Developed robust data caching mechanisms to reduce database load, improving system throughput and enhancing user experience during peak traffic periods.",
+      "Collaborated with cross-functional stakeholders to translate executive knowledge management requirements into reliable backend services."
     ],
-    techStack: ["MySQL EXPLAIN", "Redis", "REST APIs", "Node.js", "Algorithmic Optimization"]
+    techStack: ["REST APIs", "Redis Caching", "Database Optimization", "System Architecture", "Node.js", "MySQL"]
   },
   {
-    period: "Aug 2022 — Jan 2023",
+    role: "Assistant Lecturer (Subject: AI)",
+    company: "Universitas Gadjah Mada (UGM)",
+    city: "YOGYAKARTA",
+    period: "Feb 2023 — Jul 2023",
+    highlights: [
+      "Assisted Bapak Nazrul Effendy Ph.D. for one semester in the Artificial Intelligence undergraduate course.",
+      "Delivered tutoring and shared technical knowledge about AI architecture developments, machine learning models, and industry AI applications.",
+      "Mentored students on practical algorithm design, evaluated machine learning assignments, and graded semester examinations."
+    ],
+    techStack: ["Artificial Intelligence", "Python", "Machine Learning", "Neural Networks", "Mentorship"]
+  },
+  {
     role: "AI Engineer (Intern)",
     company: "Nodeflux",
-    location: "Remote (Jakarta)",
     city: "JAKARTA",
+    period: "Aug 2022 — Jan 2023",
     highlights: [
-      "Researched and benchmarked novel deep learning computer vision architectures for real-time video surveillance event detection.",
-      "Investigated model compression, weight quantization (INT8/FP16), and edge deployment strategies for resource-constrained hardware."
+      "Researched novel machine learning techniques to enhance video analytics capabilities, resulting in improved event detection and operational decision support.",
+      "Researched AI video analytic implementation for surveillance capability across diverse environmental lighting conditions.",
+      "Researched deployment strategies for edge AI solutions on compute-constrained embedded hardware."
     ],
-    techStack: ["Computer Vision", "Deep Learning", "PyTorch", "Model Quantization", "Edge AI"]
+    techStack: ["Computer Vision", "Deep Learning", "Edge AI", "Video Analytics", "PyTorch", "Python"]
   },
   {
-    period: "Mar 2021 — Feb 2026",
-    role: "Python Programming & AI/ML Tutor",
+    role: "Python and AI Tutor",
     company: "Superprof",
-    location: "Online",
     city: "ONLINE",
+    period: "Mar 2021 — Feb 2026",
     highlights: [
-      "Mentored aspiring software and ML engineers in modular, idiomatic Python, clean architecture, PEP 8, and unit testing with pytest.",
-      "Designed hands-on curricula covering core data structures, algorithms, backpropagation, and end-to-end ML training pipelines."
+      "Developed customized Python and machine learning lesson plans to improve learner comprehension and accelerate skill acquisition.",
+      "Clarified complex programming and algorithm concepts to enhance student problem-solving abilities and coding accuracy.",
+      "Monitored student progress and adjusted teaching methods to ensure consistent improvement and sustained engagement.",
+      "Implemented practical exercises and projects that reinforced theoretical knowledge and increased real-world application confidence."
     ],
-    techStack: ["Python", "Algorithms", "PyTorch", "Clean Architecture", "Mentorship"]
+    techStack: ["Python", "Machine Learning", "Algorithms", "Problem Solving", "Curriculum Design"]
   }
 ];
 ---
@@ -95,22 +103,22 @@ const experiences: Role[] = [
 <section class="py-20 bg-dark-bg border-b border-[#202534] overflow-hidden" id="experience">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- Section Header (Clean // prefix, no rec, no number, no divider) -->
+    <!-- Section Title (Prefix title only, no big title, no divider) -->
     <div class="mb-12">
       <h2 class="font-mono text-xs sm:text-sm text-cyan-400 tracking-widest font-semibold uppercase">
         // PROFESSIONAL TRAJECTORY & EXPERIENCE
       </h2>
     </div>
 
-    <!-- Route Map Container (Multi-curve animated line connecting experience stations) -->
+    <!-- Interactive Subway / Transit Style Career Map Container -->
     <div class="relative w-full py-4" id="experience-route-container">
       
-      <!-- Multi-Curve SVG Route Track: NO PRE-LINE, only active line drawn on scroll -->
+      <!-- Multi-Curve SVG Route Track: Active line drawn on scroll -->
       <svg 
         id="experience-route-svg" 
         class="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
       >
-        <!-- Animated cyan route line filled on scroll (no background pre-line) -->
+        <!-- Animated cyan route line filled on scroll -->
         <path 
           id="route-track-fill" 
           fill="none" 
@@ -118,6 +126,8 @@ const experiences: Role[] = [
           stroke-width="3" 
           stroke-linecap="round" 
           stroke-linejoin="round"
+          class="transition-opacity duration-300"
+          style="filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.7));"
         />
       </svg>
 
@@ -128,17 +138,17 @@ const experiences: Role[] = [
             class={`route-station relative flex flex-col ${idx % 2 === 0 ? 'md:items-start' : 'md:items-end'}`}
             data-station-index={idx}
           >
-            <!-- Station Card: Initially hidden, animates in with transition when connected to line -->
+            <!-- Station Card -->
             <div 
-              class={`station-card flat-panel p-5 sm:p-6 w-full md:w-[47%] relative ${
+              class={`station-card p-5 sm:p-6 w-full md:w-[47%] relative ${
                 idx % 2 === 0 
                   ? 'station-card-left md:mr-auto ml-7 md:ml-0' 
                   : 'station-card-right ml-7 md:ml-0'
               }`}
             >
               
-              <!-- Card Header Row (Clean, unbadged) -->
-              <div class="pb-3 mb-3 border-b border-[#202534]">
+              <!-- Card Header Row -->
+              <div class="station-card-header pb-3 mb-3 border-b border-[#202534]">
                 <div class="flex flex-wrap items-center gap-2">
                   <h3 class="text-base sm:text-lg font-bold text-white transition-colors">
                     {exp.role}
@@ -155,7 +165,7 @@ const experiences: Role[] = [
               <!-- Bullet Points -->
               <ul class="space-y-2 text-xs text-slate-300 mb-4 font-sans">
                 {exp.highlights.map(item => (
-                  <li class="flex items-start gap-2">
+                  <li class="station-bullet-item flex items-start gap-2">
                     <span class="text-cyan-400 font-mono text-xs mt-0.5">&gt;</span>
                     <span class="leading-relaxed">{item}</span>
                   </li>
@@ -163,7 +173,7 @@ const experiences: Role[] = [
               </ul>
 
               <!-- Tech Stack Tags -->
-              <div class="flex flex-wrap items-center gap-1 pt-3 border-t border-[#202534]">
+              <div class="station-card-tags flex flex-wrap items-center gap-1 pt-3 border-t border-[#202534]">
                 <span class="text-[10px] font-mono text-slate-400 mr-2">STACK:</span>
                 {exp.techStack.map(t => (
                   <span class="px-2 py-0.5 bg-[#0a0c12] border border-[#1e2332] font-mono text-[10px] text-slate-300">
@@ -195,57 +205,38 @@ const experiences: Role[] = [
 </section>
 
 <style>
-  /* Initial hidden state for station cards */
+  /* Frosted Glass styling for station cards */
   .station-card {
-    background-color: rgba(14, 17, 26, 0.88) !important;
-    backdrop-filter: blur(8px) !important;
-    border: 1px solid #22293a !important;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    background-color: rgba(13, 16, 25, 0.76) !important;
+    backdrop-filter: blur(12px) saturate(140%) !important;
+    background-clip: padding-box;
+    border: 1px solid rgba(34, 211, 238, 0.22) !important;
+    box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.1) !important;
+    transform-style: preserve-3d;
+    will-change: transform, opacity;
   }
 
-  .station-card-left {
-    transform: translateX(-40px) rotate(-2.5deg) scale(0.96);
+  .route-station {
+    perspective: 1200px;
   }
 
-  .station-card-right {
-    transform: translateX(40px) rotate(2.5deg) scale(0.96);
+  .station-card:hover {
+    border-color: rgba(0, 229, 255, 0.6) !important;
+    box-shadow: 0 20px 42px -10px rgba(0, 229, 255, 0.18), inset 0 1px 0 0 rgba(0, 229, 255, 0.35) !important;
   }
 
-  /* Initial hidden state for station nodes */
+  /* Node styling */
   .route-station-node {
     opacity: 0;
     transform: scale(0);
-    transition: opacity 0.35s ease-out, transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease;
-  }
-
-  /* Active connected state when line connects to station */
-  .route-station.card-connected .station-card-left {
-    opacity: 1 !important;
-    transform: translate(0, 0) rotate(-1.2deg) scale(1) !important;
-    pointer-events: auto !important;
-    border-color: #384566 !important;
-  }
-
-  .route-station.card-connected .station-card-right {
-    opacity: 1 !important;
-    transform: translate(0, 0) rotate(1.2deg) scale(1) !important;
-    pointer-events: auto !important;
-    border-color: #384566 !important;
-  }
-
-  .route-station.card-connected .station-card:hover {
-    transform: translate(0, -3px) rotate(0deg) scale(1.01) !important;
-    border-color: #00e5ff !important;
-    box-shadow: 0 16px 36px -10px rgba(0, 229, 255, 0.15) !important;
+    transition: opacity 0.35s ease-out, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   .route-station-node.node-connected {
     opacity: 1 !important;
-    transform: scale(1.15) !important;
+    transform: scale(1.22) !important;
     border-color: #00e5ff !important;
+    box-shadow: 0 0 16px rgba(0, 229, 255, 0.7) !important;
   }
 
   .route-station-node.node-connected .station-inner-dot {
@@ -301,7 +292,7 @@ const experiences: Role[] = [
     const pathLength = renderPath();
     if (!pathLength) return;
 
-    // Animate the route fill line on scroll with GSAP ScrollTrigger (NO PRE-LINE)
+    // 1. Line draws on scroll in sync with Lenis
     gsap.to(pathFill, {
       strokeDashoffset: 0,
       ease: 'none',
@@ -309,28 +300,135 @@ const experiences: Role[] = [
         trigger: '#experience-route-container',
         start: 'top 70%',
         end: 'bottom 85%',
-        scrub: true,
+        scrub: 1.0,
         onUpdate: (self) => {
           const progress = self.progress;
-          // Reveal nodes and cards with transition animation as line connects to them
           nodes.forEach((node, idx) => {
             const milestoneProgress = idx / (nodes.length - 1);
             if (progress >= milestoneProgress * 0.94) {
               node.classList.add('node-connected');
-              if (stations[idx]) stations[idx].classList.add('card-connected');
             } else {
               node.classList.remove('node-connected');
-              if (stations[idx]) stations[idx].classList.remove('card-connected');
             }
           });
         }
       }
     });
 
+    // 2. Card position moves from outside based on scroll (SCRUBBED)
+    // Once card reaches its resting position (at top 52%), internal content staggers in!
+    stations.forEach((station) => {
+      const card = station.querySelector('.station-card') as HTMLElement;
+      if (!card) return;
+
+      const isLeft = card.classList.contains('station-card-left');
+      const baseAngle = isLeft ? -1.2 : 1.2;
+      const startX = isLeft 
+        ? -Math.min(window.innerWidth * 0.9, 900) 
+        : Math.min(window.innerWidth * 0.9, 900);
+
+      // Card position strictly moves based on scroll
+      gsap.fromTo(card,
+        {
+          x: startX,
+          rotation: isLeft ? -6 : 6,
+          opacity: 0,
+          scale: 0.92
+        },
+        {
+          x: 0,
+          rotation: baseAngle,
+          opacity: 1,
+          scale: 1,
+          ease: 'power1.out',
+          scrollTrigger: {
+            trigger: station,
+            start: 'top 95%',
+            end: 'top 52%',
+            scrub: 1.0,
+            onEnter: () => {
+              card.style.pointerEvents = 'auto';
+            },
+            onLeaveBack: () => {
+              card.style.pointerEvents = 'none';
+            }
+          }
+        }
+      );
+
+      // After reaching position (top 52%), trigger stagger effect on card contents
+      const header = card.querySelector('.station-card-header');
+      const bullets = Array.from(card.querySelectorAll('.station-bullet-item'));
+      const tags = card.querySelector('.station-card-tags');
+      const elementsToStagger = [header, ...bullets, tags].filter(Boolean);
+
+      gsap.fromTo(elementsToStagger,
+        { opacity: 0, y: 16 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.38,
+          stagger: 0.08,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: station,
+            start: 'top 52%',
+            toggleActions: 'play reverse play reverse'
+          }
+        }
+      );
+    });
+
     // Re-render path on window resize
     window.addEventListener('resize', () => {
       renderPath();
       ScrollTrigger.refresh();
+    });
+
+    setupCardHoverSkew();
+  }
+
+  // Dynamic cursor-follow skew & tilt for station cards
+  function setupCardHoverSkew() {
+    const cards = Array.from(document.querySelectorAll('.station-card')) as HTMLElement[];
+    cards.forEach((card) => {
+      const isLeft = card.classList.contains('station-card-left');
+      const baseRotation = isLeft ? -1.2 : 1.2;
+
+      card.addEventListener('pointermove', (e: PointerEvent) => {
+        const rect = card.getBoundingClientRect();
+        // Normalized coordinates between -0.5 and +0.5 from center of card
+        const normX = (e.clientX - rect.left) / rect.width - 0.5;
+        const normY = (e.clientY - rect.top) / rect.height - 0.5;
+
+        // Dynamic skew and rotation following cursor
+        const targetSkewX = -normX * 8.0;
+        const targetSkewY = normY * 5.0;
+        const targetRotateZ = baseRotation + normX * 3.0;
+
+        gsap.to(card, {
+          skewX: targetSkewX,
+          skewY: targetSkewY,
+          rotation: targetRotateZ,
+          scale: 1.02,
+          duration: 0.15,
+          ease: 'power1.out',
+          overwrite: 'auto'
+        });
+      });
+
+      card.addEventListener('pointerleave', () => {
+        // Smoothly settle back to base rotation and zero skew
+        gsap.to(card, {
+          skewX: 0,
+          skewY: 0,
+          rotation: baseRotation,
+          scale: 1,
+          duration: 0.35,
+          ease: 'power2.out',
+          overwrite: 'auto'
+        });
+      });
     });
   }
 
