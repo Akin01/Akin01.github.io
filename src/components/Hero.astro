@@ -1,5 +1,32 @@
 ---
 // src/components/Hero.astro
+
+const coreGates = [
+  {
+    gate: "RUST",
+    stack: ["Tokio", "Tauri v2", "Axum", "Actix", "Serde"]
+  },
+  {
+    gate: "GO",
+    stack: ["Fiber", "Chi", "Concurrency", "Goroutines"]
+  },
+  {
+    gate: "TYPESCRIPT",
+    stack: ["Deno", "Node.js", "Bun", "SolidJS", "Next.js", "Astro"]
+  },
+  {
+    gate: "PYTHON",
+    stack: ["PyTorch", "FastAPI", "MLOps", "LSTM Time-Series"]
+  },
+  {
+    gate: "JAVA",
+    stack: ["Spring Framework", "Enterprise Backend", "Relational Modeling"]
+  },
+  {
+    gate: "APPLIED AI",
+    stack: ["LLMs", "RAG & Vector Search", "Deterministic Schemas", "Probabilistic ML"]
+  }
+];
 ---
 
 <section class="relative py-20 sm:py-24 tech-grid border-b border-[#202534]" id="hero">
@@ -42,10 +69,48 @@
             Specializing in low-latency distributed backends, web performance rendering, real-time spatial analytics, and production-grade generative AI pipelines.<span class="inline-block text-cyan-400 font-mono ml-0.5 animate-pulse">█</span>
           </p>
         </div>
-        <div class="font-mono text-xs text-slate-400 flex flex-wrap items-center gap-3 pt-3 border-t border-[#202534]">
-          <span>LOCATION: YOGYAKARTA, ID (UTC+7)</span>
-          <span class="text-slate-700">•</span>
-          <span class="text-cyan-400">CORE: RUST / GO / TYPESCRIPT / PYTHON / JAVA / AI</span>
+        <!-- Location & Core Architecture Sticky Gate Marquee -->
+        <div class="pt-3 border-t border-[#202534] space-y-2 font-mono text-xs">
+          <div class="text-slate-400 text-[11px]">
+            <span>LOCATION: YOGYAKARTA, ID (UTC+7)</span>
+          </div>
+
+          <!-- Sticky Gate Marquee Container (Borderless, Seamless) -->
+          <div 
+            id="hero-sticky-marquee"
+            class="relative overflow-x-scroll overflow-y-hidden py-1 select-none scrollbar-none [mask-image:linear-gradient(to_right,black_92%,transparent)]"
+            style="scrollbar-width: none; -ms-overflow-style: none;"
+          >
+            <div id="hero-sticky-track" class="flex items-center w-max h-full">
+              <!-- Render 2 identical sets for seamless infinite wrap -->
+              {[1, 2].map(() => (
+                <div class="flex items-center">
+                  {coreGates.map(item => (
+                    <div class="marquee-gate-group flex items-center relative h-full pr-8">
+                      <!-- Sticky Gate Header: Stays locked to left: 0 as long as this category is active! -->
+                      <div class="sticky-gate-node sticky left-0 z-10 bg-[#090a0f] pr-2.5 flex items-center gap-1.5 shrink-0 shadow-[4px_0_12px_#090a0f]">
+                        <span class="px-2 py-0.5 bg-cyan-950/90 border border-cyan-500/50 text-cyan-400 font-bold tracking-wider text-[11px] font-mono">
+                          {item.gate}
+                        </span>
+                        <span class="text-cyan-400/90 font-bold font-mono">&rarr;</span>
+                      </div>
+
+                      <!-- Stack items streaming past the sticky gate -->
+                      <div class="flex items-center gap-2 pl-2 text-slate-200 font-sans text-xs whitespace-nowrap">
+                        {item.stack.map((tech, i) => (
+                          <span class="flex items-center gap-2">
+                            <span class="hover:text-cyan-300 transition-colors font-medium">{tech}</span>
+                            {i < item.stack.length - 1 && <span class="text-slate-600 font-mono select-none">•</span>}
+                          </span>
+                        ))}
+                      </div>
+                      <span class="text-slate-700 font-mono select-none ml-4">//</span>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <!-- Flat Action Buttons -->
@@ -384,4 +449,34 @@ function akinPortrait({ shine = meta.options.shine } = {}) {
 }
 
 mount(document.getElementById("ascii-akin"), { meta, default: akinPortrait });
+</script>
+<script is:inline>
+  // Continuous Sticky Gate Marquee Scroll Engine
+  (function() {
+    const marquee = document.getElementById('hero-sticky-marquee');
+    const track = document.getElementById('hero-sticky-track');
+    if (!marquee || !track) return;
+
+    let isPaused = false;
+    let reqId = 0;
+    const speed = 0.85; // Smooth reading pace
+
+    function step() {
+      if (!isPaused && marquee) {
+        marquee.scrollLeft += speed;
+        // Seamless infinite wrap-around
+        const halfWidth = marquee.scrollWidth / 2;
+        if (marquee.scrollLeft >= halfWidth) {
+          marquee.scrollLeft -= halfWidth;
+        }
+      }
+      reqId = requestAnimationFrame(step);
+    }
+
+    reqId = requestAnimationFrame(step);
+
+    // Pause on hover
+    marquee.addEventListener('mouseenter', () => { isPaused = true; });
+    marquee.addEventListener('mouseleave', () => { isPaused = false; });
+  })();
 </script>
