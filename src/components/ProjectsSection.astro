@@ -192,7 +192,7 @@ const projects: Project[] = [
 
               return (
                 <article 
-                  class="magic-card absolute top-0 left-0 w-full h-full flat-panel p-5 sm:p-6 border border-[#262c3e] bg-[#0c0e16]/90 backdrop-blur-sm shadow-2xl cursor-pointer select-none overflow-hidden"
+                  class="magic-card absolute top-0 left-0 w-full h-full p-5 sm:p-6 border border-[#262c3e] bg-[#0c0e16]/95 shadow-2xl cursor-pointer select-none overflow-hidden"
                   data-category={proj.category}
                   data-pinned={proj.badgeType === "org" || proj.badgeType === "pinned" || proj.badgeType === "package" ? "true" : "false"}
                   data-angle={proj.angle}
@@ -250,7 +250,7 @@ const projects: Project[] = [
                   </div>
 
                   <!-- Card Face: DETAIL FOR MOBILE (Slides in ON THE CARD on mobile devices) -->
-                  <div class="card-face-detail lg:hidden absolute inset-0 p-5 sm:p-6 bg-[#0c0e16]/92 backdrop-blur-md w-full h-full flex flex-col justify-between overflow-y-auto translate-x-full opacity-0 pointer-events-none z-20 will-change-transform">
+                  <div class="card-face-detail lg:hidden absolute inset-0 p-5 sm:p-6 bg-[#0c0e16] w-full h-full flex flex-col justify-between overflow-y-auto translate-x-full opacity-0 pointer-events-none z-20 will-change-transform">
                     <div class="flex items-center justify-between pb-2.5 border-b border-[#202534] shrink-0">
                       <button 
                         type="button" 
@@ -478,7 +478,16 @@ const projects: Project[] = [
   let isSwiping = false;
   let isPointerInteracting = false;
   let isSectionVisible = false;
+  let isDesktopSplitOpen = false;
+  let isMobileDetailOpen = false;
+  let autoSwipeTimer: any = null;
+  const AUTO_SWIPE_INTERVAL = 4500;
 
+  const deckColumn = document.getElementById('deck-column');
+  const detailsColumn = document.getElementById('details-column');
+  const detailsCard = document.getElementById('project-details-card');
+  const nextButton = document.getElementById('swipe-instruction-arrow');
+  const stageWrapper = document.getElementById('projects-stage-wrapper');
   function startAutoSwipe() {
     stopAutoSwipe();
     if (!isSectionVisible) return;
@@ -667,6 +676,8 @@ const projects: Project[] = [
 
       if (diff === 0) {
         // Card 1: Front Spotlight
+        card.style.visibility = 'visible';
+        card.style.pointerEvents = 'auto';
         gsap.to(card, {
           x: 0,
           y: 0,
@@ -677,9 +688,10 @@ const projects: Project[] = [
           duration: 0.28,
           ease: 'power2.out',
         });
-        card.style.pointerEvents = 'auto';
       } else if (diff === 1) {
         // Card 2: Middle of 3-stack (Increased overflow to the right)
+        card.style.visibility = 'visible';
+        card.style.pointerEvents = 'none';
         gsap.to(card, {
           x: isDesktopSplitOpen ? -35 : 70,
           y: isDesktopSplitOpen ? 18 : -18,
@@ -690,9 +702,10 @@ const projects: Project[] = [
           duration: 0.28,
           ease: 'power2.out',
         });
-        card.style.pointerEvents = 'none';
       } else if (diff === 2) {
         // Card 3: Back of 3-stack (Increased overflow to the left)
+        card.style.visibility = 'visible';
+        card.style.pointerEvents = 'none';
         gsap.to(card, {
           x: isDesktopSplitOpen ? -62 : -60,
           y: isDesktopSplitOpen ? 32 : -30,
@@ -703,20 +716,18 @@ const projects: Project[] = [
           duration: 0.30,
           ease: 'power2.out',
         });
-        card.style.pointerEvents = 'none';
       } else {
-        // Deeper cards hidden behind with subtle upper peek
-        gsap.to(card, {
+        // Deeper cards hidden completely from compositor to avoid GPU fill-rate/paint cost
+        card.style.pointerEvents = 'none';
+        card.style.visibility = 'hidden';
+        gsap.set(card, {
           x: 0,
           y: -42,
           rotation: angle,
           scale: 0.80,
           opacity: 0,
-          zIndex: 1,
-          duration: 0.25,
-          overwrite: 'auto'
+          zIndex: 1
         });
-        card.style.pointerEvents = 'none';
       }
     });
   }
@@ -792,27 +803,31 @@ const projects: Project[] = [
       card.onpointercancel = null;
       return;
     }
-    // Attach click listeners to SPECS button
-    const specsBtn = card.querySelector('.card-specs-btn');
+    // Attach click listener to SPECS button (assigned as property to prevent duplicate listeners on layoutDeck)
+    const specsBtn = card.querySelector<HTMLElement>('.card-specs-btn');
     if (specsBtn) {
-      specsBtn.addEventListener('click', (e: Event) => {
+      specsBtn.onclick = (e) => {
         e.stopPropagation();
         const isMobile = window.innerWidth < 1024;
         if (isMobile) {
           toggleMobileCardDetail(card, true);
         } else {
-          openDesktopDetailsMode();
+          if (!isDesktopSplitOpen) {
+            openDesktopDetailsMode();
+          } else {
+            closeDesktopDetailsMode();
+          }
         }
-      });
+      };
     }
 
     // Attach click listener to mobile PREVIEW button
-    const backBtn = card.querySelector('.card-preview-back-btn');
+    const backBtn = card.querySelector<HTMLElement>('.card-preview-back-btn');
     if (backBtn) {
-      backBtn.addEventListener('click', (e: Event) => {
+      backBtn.onclick = (e) => {
         e.stopPropagation();
         toggleMobileCardDetail(card, false);
-      });
+      };
     }
     let startX = 0;
     let startY = 0;
