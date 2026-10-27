@@ -162,7 +162,7 @@ const projects: Project[] = [
 ];
 ---
 
-<section class="py-20 bg-[#07080d] border-b border-[#202534] overflow-hidden" id="projects">
+<section class="py-20 bg-[#07080d] border-b border-[#202534] overflow-x-clip" id="projects">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Section Header (Prefix title only, no big title, no divider) -->
@@ -180,7 +180,7 @@ const projects: Project[] = [
         <div id="deck-column" class="lg:col-span-12 flex flex-col items-center">
           
           <!-- 3-Stack Card Deck Container -->
-          <div class="relative w-full max-w-xl sm:max-w-2xl h-122.5 sm:h-127.5 flex items-center justify-center" id="card-deck">
+          <div class="relative w-full max-w-xl sm:max-w-2xl h-122.5 sm:h-127.5 flex items-center justify-center [touch-action:pan-y]" id="card-deck">
             {projects.map((proj, idx) => {
               const badgeColor = proj.badgeType === 'org' 
                 ? 'bg-[#1e1318] text-rose-300 border-[#3d202e]' 
@@ -192,12 +192,12 @@ const projects: Project[] = [
 
               return (
                 <article 
-                  class="magic-card absolute top-0 left-0 w-full h-full flat-panel p-5 sm:p-6 border border-[#262c3e] bg-[#0c0e16]/90 backdrop-blur-sm shadow-2xl cursor-pointer select-none overflow-hidden will-change-transform"
+                  class="magic-card absolute top-0 left-0 w-full h-full flat-panel p-5 sm:p-6 border border-[#262c3e] bg-[#0c0e16]/90 backdrop-blur-sm shadow-2xl cursor-pointer select-none overflow-hidden"
                   data-category={proj.category}
                   data-pinned={proj.badgeType === "org" || proj.badgeType === "pinned" || proj.badgeType === "package" ? "true" : "false"}
                   data-angle={proj.angle}
                   data-card-index={idx}
-                  style={`--init-angle: ${proj.angle}deg; transform: rotate(${proj.angle}deg); touch-action: none; user-select: none;`}
+                  style={`--init-angle: ${proj.angle}deg; transform: rotate(${proj.angle}deg); touch-action: pan-y; user-select: none;`}
                 >
                   <!-- Card Face: FRONT (Preview View) -->
                   <div class="card-face-front w-full h-full flex flex-col justify-between space-y-3 pointer-events-none will-change-transform">
@@ -477,21 +477,13 @@ const projects: Project[] = [
   let currentCardIndex = 0;
   let isSwiping = false;
   let isPointerInteracting = false;
-  let autoSwipeTimer: any = null;
-  let isDesktopSplitOpen = false;
-  let isMobileDetailOpen = false;
-  const AUTO_SWIPE_INTERVAL = 4500;
-
-  const deckColumn = document.getElementById('deck-column');
-  const detailsColumn = document.getElementById('details-column');
-  const detailsCard = document.getElementById('project-details-card');
-  const nextButton = document.getElementById('swipe-instruction-arrow');
-  const stageWrapper = document.getElementById('projects-stage-wrapper');
+  let isSectionVisible = false;
 
   function startAutoSwipe() {
     stopAutoSwipe();
+    if (!isSectionVisible) return;
     autoSwipeTimer = setInterval(() => {
-      if (isDesktopSplitOpen || isMobileDetailOpen || isPointerInteracting || isSwiping || document.hidden) return;
+      if (isDesktopSplitOpen || isMobileDetailOpen || isPointerInteracting || isSwiping || document.hidden || !isSectionVisible) return;
       magicSwipeNext();
     }, AUTO_SWIPE_INTERVAL);
   }
@@ -504,7 +496,7 @@ const projects: Project[] = [
   }
 
   function resetAutoSwipe() {
-    startAutoSwipe();
+    if (isSectionVisible) startAutoSwipe();
   }
 
   // --- MOBILE BEHAVIOR: In-Card Slide Transition (Detail stays on the card) ---
@@ -800,12 +792,6 @@ const projects: Project[] = [
       card.onpointercancel = null;
       return;
     }
-
-    let startX = 0;
-    let deltaX = 0;
-    let isDown = false;
-    let hasMoved = false;
-
     // Attach click listeners to SPECS button
     const specsBtn = card.querySelector('.card-specs-btn');
     if (specsBtn) {
@@ -828,51 +814,72 @@ const projects: Project[] = [
         toggleMobileCardDetail(card, false);
       });
     }
+    let startX = 0;
+    let startY = 0;
+    let deltaX = 0;
+    let isDown = false;
+    let isDraggingCard = false;
+
     card.onpointerdown = (e: PointerEvent) => {
       // Ignore click on links or interactive buttons inside the card
       if ((e.target as HTMLElement)?.closest('a, button')) return;
 
       isDown = true;
-      hasMoved = false;
-      isPointerInteracting = true;
-      stopAutoSwipe();
+      isDraggingCard = false;
       startX = e.clientX;
+      startY = e.clientY;
       deltaX = 0;
-      try { card.setPointerCapture(e.pointerId); } catch (_) {}
     };
 
     card.onpointermove = (e: PointerEvent) => {
       if (!isDown) return;
-      deltaX = e.clientX - startX;
-      if (Math.abs(deltaX) > 6) {
-        hasMoved = true;
+      
+      const diffX = e.clientX - startX;
+      const diffY = e.clientY - startY;
+
+      // Vertical vs Horizontal gesture discernment:
+      // If moving vertically, user is scrolling the page -> immediately release card and allow 100% native smooth scroll!
+      if (!isDraggingCard) {
+        if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 5) {
+          isDown = false;
+          return;
+        }
+        if (Math.abs(diffX) > 8 && Math.abs(diffX) > Math.abs(diffY)) {
+          isDraggingCard = true;
+          isPointerInteracting = true;
+          stopAutoSwipe();
+          try { card.setPointerCapture(e.pointerId); } catch (_) {}
+        }
       }
 
-      gsap.set(card, {
-        x: deltaX,
-        rotation: deltaX * 0.05,
-        ease: 'none'
-      });
+      if (isDraggingCard) {
+        deltaX = diffX;
+        gsap.set(card, {
+          x: deltaX,
+          rotation: deltaX * 0.04,
+          ease: 'none'
+        });
+      }
     };
 
     card.onpointerup = (e: PointerEvent) => {
-      if (!isDown) return;
+      if (!isDown && !isDraggingCard) return;
+      const wasDragging = isDraggingCard;
       isDown = false;
+      isDraggingCard = false;
       isPointerInteracting = false;
       resetAutoSwipe();
       try { card.releasePointerCapture(e.pointerId); } catch (_) {}
 
-      if (hasMoved && Math.abs(deltaX) > 30) {
+      if (wasDragging && Math.abs(deltaX) > 30) {
         // Swiped past threshold -> trigger magic swipe!
         magicSwipeNext();
-      } else if (!hasMoved || Math.abs(deltaX) <= 10) {
-        // Clean Click!
+      } else if (!wasDragging && Math.abs(deltaX) <= 8) {
+        // Clean Click without drag!
         const isMobile = window.innerWidth < 1024;
         if (isMobile) {
-          // Mobile: slide detail directly ON THE CARD (does not open new section)
           toggleMobileCardDetail(card);
         } else {
-          // Desktop: retain split-screen
           if (!isDesktopSplitOpen) {
             openDesktopDetailsMode();
           } else {
@@ -885,21 +892,22 @@ const projects: Project[] = [
         gsap.to(card, {
           x: 0,
           rotation: (isDesktopSplitOpen || isMobileDetailOpen) ? 0 : angle * 0.4,
-        duration: 0.20,
-        ease: 'power2.out'
+          duration: 0.22,
+          ease: 'power2.out'
         });
       }
     };
 
     card.onpointercancel = () => {
       isDown = false;
+      isDraggingCard = false;
       isPointerInteracting = false;
       resetAutoSwipe();
       const angle = parseFloat(card.getAttribute('data-angle') || '0');
       gsap.to(card, {
         x: 0,
         rotation: (isDesktopSplitOpen || isMobileDetailOpen) ? 0 : angle * 0.4,
-        duration: 0.25,
+        duration: 0.22,
         ease: 'power2.out'
       });
     };
@@ -908,8 +916,21 @@ const projects: Project[] = [
   // Init
   visibleCards = Array.from(document.querySelectorAll<HTMLElement>('.magic-card'));
   layoutDeck();
-  startAutoSwipe();
 
+  // Observe section visibility so auto-swipe only runs when in viewport
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isSectionVisible = entry.isIntersecting;
+      if (entry.isIntersecting) {
+        if (!isDesktopSplitOpen && !isMobileDetailOpen) startAutoSwipe();
+      } else {
+        stopAutoSwipe();
+      }
+    });
+  }, { threshold: 0.15 });
+
+  const projectsSection = document.getElementById('projects');
+  if (projectsSection) sectionObserver.observe(projectsSection);
   // Pause auto-swipe on hover, resume on leave
   if (stageWrapper) {
     stageWrapper.addEventListener('mouseenter', stopAutoSwipe);
